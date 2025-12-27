@@ -267,13 +267,14 @@ def sample_batch(rng: random.Random, t: TaskSpec) -> Batch:
         def gen_lists(k, min_len, max_len):
             data = []
             for _ in range(k):
-                l = rng.randint(min_len, max_len)
+                l = rng.randint(int(min_len), int(max_len))
                 data.append([rng.randint(-100, 100) for _ in range(l)])
             return data
             
-        x_tr = gen_lists(t.n_train, 3, 10)
-        x_ho = gen_lists(t.n_hold, 10, 20)
-        x_st = gen_lists(t.n_hold, 20, 40)
+        # Use x_min/x_max as Length Range
+        x_tr = gen_lists(t.n_train, t.x_min, t.x_max)
+        x_ho = gen_lists(t.n_hold, t.x_min + 2, t.x_max + 2) # Holdout slightly longer
+        x_st = gen_lists(t.n_hold, t.x_max + 5, t.x_max + 10) # Stress much longer
         
         # Ground Truth
         y_tr = [f(x) for x in x_tr]
@@ -340,7 +341,30 @@ def calc_error(p: Any, t: Any) -> float:
         return sum(calc_error(pv, tv) for pv, tv in zip(p, t))
     return 1e6 # Unknown type penalty
 
-def mse_exec(code: str, xs: List[Any], ys: List[Any]) -> Tuple[bool, float, str]:
+def calc_loss_sort(p: List[Any], t: List[Any]) -> float:
+    """Advanced Fitness for Sorting: Inversions + Element Matching."""
+    if not isinstance(p, list): return 1e6
+    if len(p) != len(t): return 1000.0 * abs(len(p) - len(t))
+    
+    # 1. Element Mismatch Penalty (Gradient for content)
+    # Use simple histogram match or sort-match
+    p_sorted = sorted(p) if all(isinstance(x, (int, float)) for x in p) else p
+    t_sorted = sorted(t)
+    content_loss = sum((a-b)**2 for a, b in zip(p_sorted, t_sorted))
+    
+    if content_loss > 0.1:
+        return 1000.0 + content_loss # Penalize content mismatch heavily first
+        
+    # 2. Inversion Count (Gradient for order)
+    # Kendall Tau distance approximates swap distance
+    inversions = 0
+    for i in range(len(p)):
+        for j in range(i + 1, len(p)):
+            if p[i] > p[j]:
+                inversions += 1
+    return float(inversions)
+
+def mse_exec(code: str, xs: List[Any], ys: List[Any], task_name: str='') -> Tuple[bool, float, str]:
     ok, err = validate_code(code)
     if not ok:
         return (False, float('inf'), err)
@@ -349,17 +373,21 @@ def mse_exec(code: str, xs: List[Any], ys: List[Any]) -> Tuple[bool, float, str]
         for x, y in zip(xs, ys):
             pred = safe_exec(code, x)
             if pred is None: return (False, float('inf'), "No return")
-            total_err += calc_error(pred, y)
+            
+            if task_name == 'sort':
+                total_err += calc_loss_sort(pred, y)
+            else:
+                total_err += calc_error(pred, y)
         
         return (True, total_err / max(1, len(xs)), None)
     except Exception as e:
         return (False, float('inf'), str(e))
 
-def evaluate(g: Genome, b: Batch, lam: float=0.0001) -> EvalResult:
+def evaluate(g: Genome, b: Batch, task_name: str, lam: float=0.0001) -> EvalResult:
     code = g.code
-    ok1, tr, e1 = mse_exec(code, b.x_tr, b.y_tr)
-    ok2, ho, e2 = mse_exec(code, b.x_ho, b.y_ho)
-    ok3, st, e3 = mse_exec(code, b.x_st, b.y_st)
+    ok1, tr, e1 = mse_exec(code, b.x_tr, b.y_tr, task_name)
+    ok2, ho, e2 = mse_exec(code, b.x_ho, b.y_ho, task_name)
+    ok3, st, e3 = mse_exec(code, b.x_st, b.y_st, task_name)
     ok = ok1 and ok2 and ok3 and all((math.isfinite(v) for v in [tr, ho, st]))
     nodes = node_count(code)
     score = SCORE_W_HOLD * ho + SCORE_W_STRESS * st + SCORE_W_TRAIN * tr + lam * nodes
@@ -694,22 +722,37 @@ def maybe_evolve_operators_lib(rng: random.Random, threshold: int=10):
     return None
 
 class ProblemGenerator:
-    """Phase 3: Co-evolutionary Discriminator. Generates hard tasks."""
+    """Phase 3: Co-evolutionary Discriminator. Generates hard tasks via Parameter Curriculum."""
     def __init__(self):
-        self.archive: List[Genome] = []
+        self.archive: List[Dict] = []
     
     def evolve_task(self, rng: random.Random, current_elites: List[Genome]) -> TaskSpec:
-        """Create a new task that challenges current elites."""
-        # 1. Start with a seed (random expression)
-        stmts = [f"return ({_random_expr(rng, depth=0)})"]
-        challenge = Genome(statements=stmts, gid="task_gen")
+        """Phase 3: Curriculum Learning (Parameter Evolution)."""
+        # Guaranteed Solvability: Simply increase difficulty of known solvable tasks
         
-        # 2. Mutate to increase complexity
-        for _ in range(rng.randint(2, 5)):
-            op = rng.choice(['insert_assign', 'insert_if', 'modify_line'])
-            challenge.statements = OPERATORS[op](rng, challenge.statements)
-            
-        code = challenge.code
+        # 1. Select Base Task Type
+        base_name = 'sort' # Pivot to Sort for now
+        
+        # 2. Determine Current Difficulty Level (Mock logic for beta)
+        # In real logic, we'd check the 'task' object passed in, but here we generate new
+        level = rng.randint(1, 5)
+        
+        mn = 3 + level * 2
+        mx = 5 + level * 3
+        
+        new_task = TaskSpec(
+            name=base_name,
+            n_train=64 + level * 10,
+            n_hold=32,
+            # Hijack 'x_min'/'x_max' to store List Length Range for 'sort'
+            x_min=float(mn), # Min Length
+            x_max=float(mx), # Max Length
+            noise=0.0 # No noise for logic tasks
+        )
+        return new_task
+                
+    def _mutate_target(self, rng: random.Random, code: str) -> str:
+        return "deprecated"
         # 3. Create TaskSpec
         name = f"gen_task_{sha256(code)[:6]}"
         task = TaskSpec(name=name, target_code=code, x_min=-5.0, x_max=5.0)
@@ -874,9 +917,10 @@ class Universe:
         rng = random.Random(self.seed + gen * 1009)
         batch = sample_batch(rng, task)
         # helpers = self.library.get_helpers() # Disable LGP library for now
-        scored: List[Tuple[Genome, EvalResult]] = []
+        # Evaluation
+        scored = []
         for g in self.pool:
-            res = evaluate(g, batch, self.meta.complexity_lambda)
+            res = evaluate(g, batch, task.name, self.meta.complexity_lambda)
             if res.ok:
                 scored.append((g, res))
         if not scored:
