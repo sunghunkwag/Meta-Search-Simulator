@@ -172,8 +172,8 @@ class EvalResult:
     nodes: int
     score: float
     err: str = None
-SCORE_W_HOLD = 0.55
-SCORE_W_STRESS = 0.35
+SCORE_W_HOLD = 0.48
+SCORE_W_STRESS = 0.3
 SCORE_W_TRAIN = 0.05
 
 def mse(expr: str, xs: List[float], ys: List[float]) -> Tuple[bool, float, str]:
@@ -319,6 +319,35 @@ def maybe_evolve_operators_lib(rng: random.Random, threshold: int=10):
         OPERATORS_LIB[name] = spec
         return name
     return None
+
+def _rewrite_operators_block(src: str, new_lib: Dict) -> str:
+    """Rewrite OPERATORS_LIB in source code with learned operators."""
+    pattern = r'(# @@OPERATORS_LIB_START@@\s*\nOPERATORS_LIB:\s*Dict\[str,\s*Dict\]\s*=\s*)(\{[^}]*\})(\s*\n# @@OPERATORS_LIB_END@@)'
+    match = re.search(pattern, src, flags=re.DOTALL)
+    if not match:
+        return src
+    prefix, _, suffix = match.group(1), match.group(2), match.group(3)
+    # Format new library dict
+    lines = ["{"]
+    for name, spec in new_lib.items():
+        lines.append(f'    "{name}": {json.dumps(spec)},')
+    lines.append("}")
+    new_dict = "\n".join(lines)
+    return src[:match.start()] + prefix + new_dict + suffix + src[match.end():]
+
+def save_operators_lib(path: Path):
+    """Save OPERATORS_LIB to JSON file."""
+    path.write_text(json.dumps(OPERATORS_LIB, indent=2), encoding='utf-8')
+
+def load_operators_lib(path: Path):
+    """Load OPERATORS_LIB from JSON file."""
+    global OPERATORS_LIB
+    if path.exists():
+        try:
+            OPERATORS_LIB.update(json.loads(path.read_text(encoding='utf-8')))
+        except:
+            pass
+
 
 def crossover(rng: random.Random, a: str, b: str) -> str:
     ta = re.findall('\\w+|[+\\-*/().]|[\\d.]+', a)
@@ -545,12 +574,16 @@ STATE_DIR = Path('.rsi_state')
 def save_state(gs: GlobalState):
     gs.updated_ms = now_ms()
     write_json(STATE_DIR / 'state.json', asdict(gs))
+    # Also save OPERATORS_LIB for persistence across restarts
+    save_operators_lib(STATE_DIR / 'operators_lib.json')
 
 def load_state() -> Optional[GlobalState]:
     p = STATE_DIR / 'state.json'
     if not p.exists():
         return None
     try:
+        # Also load OPERATORS_LIB if it exists
+        load_operators_lib(STATE_DIR / 'operators_lib.json')
         return GlobalState(**read_json(p))
     except:
         return None
@@ -654,12 +687,14 @@ def propose_patches(gs: GlobalState, levels: List[int]) -> List[PatchPlan]:
             if ok and new_src != src:
                 plans.append(PatchPlan(3, sha256(f'{name}={new_val}')[:8], f'L3: {name} -> {new_val}', 'Eval rebalancing', new_src, unified_diff(src, new_src, 'script.py')))
     if 4 in levels:
-        compounds = [('op_drift_grow', 'try:\n        e = op_const_drift(rng, expr)\n        return op_grow(rng, e)\n    except: return expr'), ('op_shrink_call', 'try:\n        e = op_shrink(rng, expr)\n        return op_wrap_call(rng, e)\n    except: return expr')]
-        for name, code in compounds:
-            if name not in src:
-                ok, new_src = _patch_add_operator(src, name, code)
-                if ok:
-                    plans.append(PatchPlan(4, sha256(name)[:8], f'L4: Add {name}', 'Operator synthesis', new_src, unified_diff(src, new_src, 'script.py')))
+        # TRUE L4: Persist runtime-learned OPERATORS_LIB to source code
+        if OPERATORS_LIB:
+            new_src = _rewrite_operators_block(src, OPERATORS_LIB)
+            if new_src != src:
+                plans.append(PatchPlan(4, sha256(str(OPERATORS_LIB))[:8], 
+                    f'L4: Persist {len(OPERATORS_LIB)} learned operators', 
+                    f'Operators: {list(OPERATORS_LIB.keys())[:5]}', 
+                    new_src, unified_diff(src, new_src, 'script.py')))
     if 5 in levels:
         elite_mods = [('max(4, pop_size // 10)', 'max(4, pop_size // 8)'), ('max(4, pop_size // 8)', 'max(4, pop_size // 12)'), ('max(4, pop_size // 12)', 'max(4, pop_size // 10)')]
         for old_pat, new_pat in elite_mods:

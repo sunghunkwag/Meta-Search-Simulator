@@ -1,0 +1,23 @@
+{
+  "synth_drift_then_grow": {
+    "steps": [
+      "const_drift",
+      "grow"
+    ],
+    "score": 0.0
+  },
+  "synth_shrink_wrap": {
+    "steps": [
+      "shrink",
+      "wrap_call"
+    ],
+    "score": 0.0
+  },
+  "synth_double_drift": {
+    "steps": [
+      "const_drift",
+      "const_drift"
+    ],
+    "score": 0.0
+  }
+}
