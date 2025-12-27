@@ -1,29 +1,17 @@
 {
-  "synth_drift_then_grow": {
+  "synth_468e2860": {
     "steps": [
-      "const_drift",
-      "grow"
+      "delete_stmt",
+      "insert_while"
     ],
     "score": 0.0
   },
-  "synth_shrink_wrap": {
+  "synth_2931fe5e": {
     "steps": [
-      "shrink",
-      "wrap_call"
-    ],
-    "score": 0.0
-  },
-  "synth_double_drift": {
-    "steps": [
-      "const_drift",
-      "const_drift"
-    ],
-    "score": 0.0
-  },
-  "synth_48adadcd": {
-    "steps": [
-      "graft_lib",
-      "shrink"
+      "delete_stmt",
+      "insert_if",
+      "delete_stmt",
+      "insert_assign"
     ],
     "score": 0.0
   }

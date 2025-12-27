@@ -1,8 +1,8 @@
 {
   "version": "RSI_EXT_v1",
-  "created_ms": 1766858123029,
-  "updated_ms": 1766858123032,
-  "base_seed": 1337,
+  "created_ms": 1766875086465,
+  "updated_ms": 1766875086465,
+  "base_seed": 74983,
   "task": {
     "name": "poly2",
     "x_min": -3.0,
@@ -14,217 +14,246 @@
   },
   "universes": [
     {
-      "uid": 2,
-      "seed": 21283,
+      "uid": 1,
+      "seed": 84956,
       "meta": {
         "op_weights": {
-          "const_drift": 1.2047551532529839,
-          "swap_binop": 1.0,
-          "wrap_unary": 1.0,
-          "wrap_call": 1.0,
-          "insert_ifexp": 1.0,
-          "shrink": 1.0,
-          "grow": 5.0,
-          "graft_lib": 1.0
+          "insert_assign": 1.0,
+          "insert_if": 1.0,
+          "insert_while": 1.0,
+          "delete_stmt": 1.0,
+          "modify_line": 1.0
         },
-        "mutation_rate": 0.5859,
-        "crossover_rate": 0.2,
+        "mutation_rate": 0.8863,
+        "crossover_rate": 0.2141,
         "complexity_lambda": 0.0001,
-        "epsilon_explore": 0.09,
-        "stuck_counter": 0
+        "epsilon_explore": 0.11999999999999998,
+        "stuck_counter": 7,
+        "strategy": {
+          "selection_code": "\ndef run():\n    # Context injected: pool, scores, pop_size, rng, map_elites\n    # Returns: (elites, breeding_parents)\n    scored = sorted(zip(pool, scores), key=lambda x: x[1])\n    elite_k = max(4, pop_size // 10)\n    elites = [g for g, s in scored[:elite_k]]\n    \n    parents = []\n    n_needed = pop_size - len(elites)\n    for _ in range(n_needed):\n        # 10% chance to pick from MAP-Elites\n        if rng.random() < 0.1 and map_elites and map_elites.grid:\n             p = map_elites.sample(rng) or rng.choice(elites)\n        else:\n             p = rng.choice(elites)\n        parents.append(p)\n    return elites, parents\n",
+          "crossover_code": "\ndef run():\n    # Context: p1 (stmts), p2 (stmts), rng\n    if len(p1) < 2 or len(p2) < 2: return p1\n    idx_a = rng.randint(0, len(p1))\n    idx_b = rng.randint(0, len(p2))\n    return p1[:idx_a] + p2[idx_b:]\n",
+          "mutation_policy_code": "\ndef run():\n    # Placeholder for mutation policy\n    return 'default'\n",
+          "gid": "default"
+        }
       },
       "best": {
-        "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-        "gid": "0eeaf04bbcce",
-        "parents": [
-          "fc303d94636d"
+        "statements": [
+          "return x"
         ],
-        "op_tag": "crossover|pruned",
-        "birth_ms": 1766858121713
+        "gid": "8f8e9e886ad4",
+        "parents": [],
+        "op_tag": "init",
+        "birth_ms": 1766874983408
       },
-      "best_score": 6.128896116101038,
-      "best_hold": 1.040631388550392,
-      "best_stress": 18.601716836409256,
+      "best_score": 151.89607855316947,
+      "best_hold": 11.290140406304117,
+      "best_stress": 486.35182777755045,
       "pool": [
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "0eeaf04bbcce",
-          "parents": [
-            "fc303d94636d"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858121713
+          "gid": "8f8e9e886ad4",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983408
         },
         {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "2ec8ffc0ce11",
+          "statements": [
+            "return x"
+          ],
+          "gid": "8f8e9e886ad4",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983408
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "8f8e9e886ad4",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983408
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "8f8e9e886ad4",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983408
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "8f8e9e886ad4",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983408
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "8f8e9e886ad4",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983408
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "99d233bde10d",
           "parents": [
-            "7ec9cf44a3f0"
+            "8f8e9e886ad4"
           ],
           "op_tag": "crossover",
-          "birth_ms": 1766858121046
+          "birth_ms": 1766875082959
         },
         {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "b66c60dde0a7",
+          "statements": [],
+          "gid": "43e473bdaa47",
           "parents": [
-            "2ec8ffc0ce11"
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "synth:synth_468e2860",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "v3 = (((v0 + v0) + (x * 0)) + (v0 * (3 + 9)))"
+          ],
+          "gid": "10d6a204eb67",
+          "parents": [
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "synth:synth_2931fe5e",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "99d233bde10d",
+          "parents": [
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "mut:modify_line",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "99d233bde10d",
+          "parents": [
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "mut:modify_line",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "99d233bde10d",
+          "parents": [
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "mut:modify_line",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "99d233bde10d",
+          "parents": [
+            "8f8e9e886ad4"
           ],
           "op_tag": "copy",
-          "birth_ms": 1766858121710
+          "birth_ms": 1766875082959
         },
         {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "b66c60dde0a7",
-          "parents": [
-            "2ec8ffc0ce11"
+          "statements": [
+            "v0 = ((v0 * x) - x)"
           ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858121710
-        },
-        {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "e1405dd333b2",
+          "gid": "04dc7cddcc27",
           "parents": [
-            "b66c60dde0a7"
+            "8f8e9e886ad4"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122770
+          "op_tag": "synth:synth_2931fe5e",
+          "birth_ms": 1766875082959
         },
         {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "e1405dd333b2",
+          "statements": [
+            "v0 = 4"
+          ],
+          "gid": "cdaa4b513352",
           "parents": [
-            "b66c60dde0a7"
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "synth:synth_2931fe5e",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "if v2 < 7:",
+            "    return x"
+          ],
+          "gid": "cfdc7ad9cd95",
+          "parents": [
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "mut:insert_if",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "while v3 < 7:",
+            "    return x"
+          ],
+          "gid": "c8325c1bd616",
+          "parents": [
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "mut:insert_while",
+          "birth_ms": 1766875082959
+        },
+        {
+          "statements": [
+            "return x"
+          ],
+          "gid": "99d233bde10d",
+          "parents": [
+            "8f8e9e886ad4"
           ],
           "op_tag": "crossover",
-          "birth_ms": 1766858122773
+          "birth_ms": 1766875082959
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "df3d8d013fbb",
-          "parents": [
-            "0eeaf04bbcce"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122773
+          "gid": "99d233bde10d",
+          "parents": [
+            "8f8e9e886ad4"
+          ],
+          "op_tag": "crossover",
+          "birth_ms": 1766875082959
         },
         {
-          "expr": "(0.1617706174405662 * x + 0.26854881477926157) * x + 0.2905578767607494 + -0.39275325383991344 + -0.7000912291345153",
-          "gid": "cfbce17d40c4",
+          "statements": [],
+          "gid": "43e473bdaa47",
           "parents": [
-            "b66c60dde0a7"
+            "8f8e9e886ad4"
           ],
-          "op_tag": "synth:synth_double_drift",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "b2f4eb771a9e",
-          "parents": [
-            "b66c60dde0a7"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "f6e033ff780f",
-          "parents": [
-            "0eeaf04bbcce"
-          ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.26854881477926157) * x + 0.39275325383991344 + -0.3073416571274104 + -0.7000912291345153",
-          "gid": "8ca64f9179b6",
-          "parents": [
-            "b66c60dde0a7"
-          ],
-          "op_tag": "mut:const_drift",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "f6e033ff780f",
-          "parents": [
-            "0eeaf04bbcce"
-          ],
-          "op_tag": "mut:graft_lib|pruned",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "10.21950067436615 + -0.7616817895988497",
-          "gid": "e0d4ed65aa02",
-          "parents": [
-            "3135cf56017b"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "b2f4eb771a9e",
-          "parents": [
-            "b66c60dde0a7"
-          ],
-          "op_tag": "copy|pruned",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "b2f4eb771a9e",
-          "parents": [
-            "b66c60dde0a7"
-          ],
-          "op_tag": "mut:swap_binop|pruned",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "floor(0.39275325383991344)",
-          "gid": "84bbce1745b2",
-          "parents": [
-            "2ec8ffc0ce11"
-          ],
-          "op_tag": "mut:graft_lib",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "x",
-          "gid": "a7ff756e72ac",
-          "parents": [
-            "b66c60dde0a7"
-          ],
-          "op_tag": "mut:shrink",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "b2f4eb771a9e",
-          "parents": [
-            "2ec8ffc0ce11"
-          ],
-          "op_tag": "copy|pruned",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "f6e033ff780f",
-          "parents": [
-            "0eeaf04bbcce"
-          ],
-          "op_tag": "mut:swap_binop",
-          "birth_ms": 1766858122774
-        },
-        {
-          "expr": "gamma(-0.39275325383991344)",
-          "gid": "cdfc874eb66e",
-          "parents": [
-            "b66c60dde0a7"
-          ],
-          "op_tag": "mut:graft_lib",
-          "birth_ms": 1766858122774
+          "op_tag": "mut:delete_stmt",
+          "birth_ms": 1766875082959
         }
       ],
       "library": {
@@ -234,297 +263,372 @@
         {
           "gen": 0,
           "accepted": true,
-          "score": 232.27420603643725,
-          "hold": 21.239663693806,
-          "stress": 736.9762239731064,
-          "expr": "(x-1)"
+          "score": 247.7918072382476,
+          "hold": 11.879981147419803,
+          "stress": 803.5978007173971,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 1,
           "accepted": true,
-          "score": 43.63031521664658,
-          "hold": 1.9983731862593712,
-          "stress": 141.76765730814205,
-          "expr": "(x - 1) * x"
+          "score": 171.01785148839937,
+          "hold": 12.543397855787497,
+          "stress": 547.0308927520833,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 2,
-          "accepted": true,
-          "score": 15.953820588800735,
-          "hold": 2.5155736904917974,
-          "stress": 48.65203964889661,
-          "expr": "(0.8550243565946244 * x + 0.629148337020353) * x + 0.39275325383991344"
+          "accepted": false,
+          "score": 171.01785148839937,
+          "hold": 12.543397855787497,
+          "stress": 547.0308927520833,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 3,
           "accepted": false,
-          "score": 15.953820588800735,
-          "hold": 2.5155736904917974,
-          "stress": 48.65203964889661,
-          "expr": "(0.8550243565946244 * x + 0.629148337020353) * x + 0.39275325383991344"
+          "score": 171.01785148839937,
+          "hold": 12.543397855787497,
+          "stress": 547.0308927520833,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 4,
-          "accepted": true,
-          "score": 10.475642542488904,
-          "hold": 1.2079689575038908,
-          "stress": 32.75589816101793,
-          "expr": "(0.8550243565946244 * x + 0.3842718562719887) * x + 0.39275325383991344 + -0.7000912291345153"
+          "accepted": false,
+          "score": 171.01785148839937,
+          "hold": 12.543397855787497,
+          "stress": 547.0308927520833,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 5,
           "accepted": false,
-          "score": 10.475642542488904,
-          "hold": 1.2079689575038908,
-          "stress": 32.75589816101793,
-          "expr": "(0.8550243565946244 * x + 0.3842718562719887) * x + 0.39275325383991344 + -0.7000912291345153"
+          "score": 171.01785148839937,
+          "hold": 12.543397855787497,
+          "stress": 547.0308927520833,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 6,
           "accepted": false,
-          "score": 10.475642542488904,
-          "hold": 1.2079689575038908,
-          "stress": 32.75589816101793,
-          "expr": "(0.8550243565946244 * x + 0.3842718562719887) * x + 0.39275325383991344 + -0.7000912291345153"
+          "score": 171.01785148839937,
+          "hold": 12.543397855787497,
+          "stress": 547.0308927520833,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 7,
           "accepted": true,
-          "score": 8.328091009959065,
-          "hold": 0.7811246311422767,
-          "stress": 26.35130816550227,
-          "expr": "(0.8550243565946244 * x + 0.26854881477926157) * x + 0.39275325383991344 + -0.7000912291345153"
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 8,
           "accepted": false,
-          "score": 8.328091009959065,
-          "hold": 0.7811246311422767,
-          "stress": 26.35130816550227,
-          "expr": "(0.8550243565946244 * x + 0.26854881477926157) * x + 0.39275325383991344 + -0.7000912291345153"
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 9,
-          "accepted": true,
-          "score": 6.128896116101038,
-          "hold": 1.040631388550392,
-          "stress": 18.601716836409256,
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872"
+          "accepted": false,
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 10,
+          "accepted": false,
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 11,
+          "accepted": false,
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 12,
+          "accepted": false,
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 13,
+          "accepted": false,
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 14,
+          "accepted": false,
+          "score": 151.89607855316947,
+          "hold": 11.290140406304117,
+          "stress": 486.35182777755045,
+          "code": "def run(x):\n    # 8f8e9e886ad4\n    _steps=0\n    v0=x\n    return x"
         }
       ]
     },
     {
       "uid": 0,
-      "seed": 1337,
+      "seed": 74983,
       "meta": {
         "op_weights": {
-          "const_drift": 1.0,
-          "swap_binop": 1.0,
-          "wrap_unary": 1.0,
-          "wrap_call": 1.0,
-          "insert_ifexp": 1.0,
-          "shrink": 1.0,
-          "grow": 1.0,
-          "graft_lib": 1.0
+          "insert_assign": 1.0,
+          "insert_if": 1.0,
+          "insert_while": 1.0,
+          "delete_stmt": 1.0,
+          "modify_line": 1.0
         },
-        "mutation_rate": 0.5859,
-        "crossover_rate": 0.2,
+        "mutation_rate": 0.8863,
+        "crossover_rate": 0.2141,
         "complexity_lambda": 0.0001,
-        "epsilon_explore": 0.09999999999999999,
-        "stuck_counter": 1
+        "epsilon_explore": 0.11999999999999998,
+        "stuck_counter": 5,
+        "strategy": {
+          "selection_code": "\ndef run():\n    # Context injected: pool, scores, pop_size, rng, map_elites\n    # Returns: (elites, breeding_parents)\n    scored = sorted(zip(pool, scores), key=lambda x: x[1])\n    elite_k = max(4, pop_size // 10)\n    elites = [g for g, s in scored[:elite_k]]\n    \n    parents = []\n    n_needed = pop_size - len(elites)\n    for _ in range(n_needed):\n        # 10% chance to pick from MAP-Elites\n        if rng.random() < 0.1 and map_elites and map_elites.grid:\n             p = map_elites.sample(rng) or rng.choice(elites)\n        else:\n             p = rng.choice(elites)\n        parents.append(p)\n    return elites, parents\n",
+          "crossover_code": "\ndef run():\n    # Context: p1 (stmts), p2 (stmts), rng\n    if len(p1) < 2 or len(p2) < 2: return p1\n    idx_a = rng.randint(0, len(p1))\n    idx_b = rng.randint(0, len(p2))\n    return p1[:idx_a] + p2[idx_b:]\n",
+          "mutation_policy_code": "\ndef run():\n    # Placeholder for mutation policy\n    return 'default'\n",
+          "gid": "default"
+        }
       },
       "best": {
-        "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-        "gid": "fc303d94636d",
-        "parents": [
-          "0daee0bc8a30"
+        "statements": [
+          "return x"
         ],
-        "op_tag": "synth:synth_double_drift",
-        "birth_ms": 1766858119670
+        "gid": "06ae6c82f144",
+        "parents": [],
+        "op_tag": "init",
+        "birth_ms": 1766874983407
       },
-      "best_score": 6.531607283930003,
-      "best_hold": 1.1557081886817873,
-      "best_stress": 19.736890545495513,
+      "best_score": 183.28136758974023,
+      "best_hold": 11.261331635041904,
+      "best_stress": 590.6817047733938,
       "pool": [
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "fc303d94636d",
-          "parents": [
-            "0daee0bc8a30"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "synth:synth_double_drift",
-          "birth_ms": 1766858119670
+          "gid": "06ae6c82f144",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983407
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "7ec4852dffae",
-          "parents": [
-            "fc303d94636d"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "mut:swap_binop|pruned",
-          "birth_ms": 1766858120613
+          "gid": "06ae6c82f144",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983407
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "7ec4852dffae",
-          "parents": [
-            "fc303d94636d"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "mut:swap_binop|pruned",
-          "birth_ms": 1766858120613
+          "gid": "06ae6c82f144",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983407
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "7ec4852dffae",
-          "parents": [
-            "fc303d94636d"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858120613
+          "gid": "06ae6c82f144",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983407
         },
         {
-          "expr": "sqrt(0.0)",
-          "gid": "655fd8c8a70f",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "synth:synth_shrink_wrap",
-          "birth_ms": 1766858122332
+          "gid": "06ae6c82f144",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983407
         },
         {
-          "expr": "(0.6172715753121413 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "4f5d36e63f9d",
-          "parents": [
-            "fc303d94636d"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "mut:const_drift",
-          "birth_ms": 1766858122332
+          "gid": "06ae6c82f144",
+          "parents": [],
+          "op_tag": "init",
+          "birth_ms": 1766874983407
         },
         {
-          "expr": "(+-0.14009717264924954)*x+-1.1240994341833872",
-          "gid": "7dd6de59900e",
+          "statements": [
+            "return x"
+          ],
+          "gid": "1e000f3b52f3",
           "parents": [
-            "7ec4852dffae"
+            "06ae6c82f144"
           ],
           "op_tag": "crossover",
-          "birth_ms": 1766858122332
+          "birth_ms": 1766875086455
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "fc303d94636d"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122332
+          "gid": "b573e9dc0c04",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "crossover",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "while v1 < 0:",
+            "    return x"
           ],
-          "op_tag": "mut:wrap_call|pruned",
-          "birth_ms": 1766858122332
+          "gid": "df0296d7e22f",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "mut:insert_while",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "copy|pruned",
-          "birth_ms": 1766858122332
+          "gid": "b573e9dc0c04",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "crossover",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.5192481517109093) * x + -1.2835193975148862",
-          "gid": "5945242088dd",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "v1 = (0 - ((v0 + v0) * (v0 * 3)))"
           ],
-          "op_tag": "synth:synth_double_drift",
-          "birth_ms": 1766858122332
+          "gid": "d665ec188296",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "synth:synth_2931fe5e",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858122332
+          "gid": "b573e9dc0c04",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "mut:modify_line",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "while v0 < 0:",
+            "    return x"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122332
+          "gid": "c4b124a96f0c",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "mut:insert_while",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "while v2 < 8:",
+            "    return x"
           ],
-          "op_tag": "mut:wrap_unary|pruned",
-          "birth_ms": 1766858122332
+          "gid": "4a4f9f46a4e8",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "mut:insert_while",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "v0 = (v0 - x)"
           ],
-          "op_tag": "mut:insert_ifexp|pruned",
-          "birth_ms": 1766858122332
+          "gid": "de3fac891ab7",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "synth:synth_2931fe5e",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "v3 = 0.58"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122332
+          "gid": "980bedf1509e",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "synth:synth_2931fe5e",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872",
-          "gid": "923143f6b95b",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "if v0 < 0:",
+            "    return x"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122332
+          "gid": "f6dcf8607862",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "mut:insert_if",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "(0.8550243565946244*x+0)*x",
-          "gid": "fcbf90a2e712",
-          "parents": [
-            "1b0d06b79e0d"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858122332
+          "gid": "b573e9dc0c04",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "crossover",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "10.21950067436615 + -0.7616817895988497",
-          "gid": "aba9a36657f5",
-          "parents": [
-            "3135cf56017b"
+          "statements": [
+            "v3 = ((7 + v0) + v0)"
           ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122332
+          "gid": "468615773085",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "synth:synth_2931fe5e",
+          "birth_ms": 1766875086459
         },
         {
-          "expr": "log(0.14009717264924954)",
-          "gid": "8a9eb1a0859e",
-          "parents": [
-            "7ec4852dffae"
+          "statements": [
+            "return x"
           ],
-          "op_tag": "mut:wrap_call",
-          "birth_ms": 1766858122332
+          "gid": "b573e9dc0c04",
+          "parents": [
+            "06ae6c82f144"
+          ],
+          "op_tag": "crossover",
+          "birth_ms": 1766875086459
         }
       ],
       "library": {
@@ -534,686 +638,126 @@
         {
           "gen": 0,
           "accepted": true,
-          "score": 226.29185866956982,
-          "hold": 7.349893840076889,
-          "stress": 741.6017537446943,
-          "expr": "(0.5*x+0.5)"
+          "score": 205.83671844308978,
+          "hold": 15.142404061657857,
+          "stress": 659.6393465010768,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 1,
           "accepted": true,
-          "score": 8.71170265548971,
-          "hold": 1.3628253960545285,
-          "stress": 26.52215819019391,
-          "expr": "(0.8550243565946244 * x + 0.5) * x"
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 2,
           "accepted": false,
-          "score": 8.71170265548971,
-          "hold": 1.3628253960545285,
-          "stress": 26.52215819019391,
-          "expr": "(0.8550243565946244 * x + 0.5) * x"
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 3,
           "accepted": false,
-          "score": 8.71170265548971,
-          "hold": 1.3628253960545285,
-          "stress": 26.52215819019391,
-          "expr": "(0.8550243565946244 * x + 0.5) * x"
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 4,
           "accepted": false,
-          "score": 8.71170265548971,
-          "hold": 1.3628253960545285,
-          "stress": 26.52215819019391,
-          "expr": "(0.8550243565946244 * x + 0.5) * x"
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 5,
-          "accepted": true,
-          "score": 7.577356270175245,
-          "hold": 1.5384372073682206,
-          "stress": 22.53320344406136,
-          "expr": "(0.8550243565946244 * x + 0.22133561805536442) * x + -1.1240994341833872"
+          "accepted": false,
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 6,
           "accepted": false,
-          "score": 7.577356270175245,
-          "hold": 1.5384372073682206,
-          "stress": 22.53320344406136,
-          "expr": "(0.8550243565946244 * x + 0.22133561805536442) * x + -1.1240994341833872"
-        },
-        {
-          "gen": 7,
-          "accepted": true,
-          "score": 6.979041185513947,
-          "hold": 1.0810331778745954,
-          "stress": 21.330053549627046,
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872"
-        },
-        {
-          "gen": 8,
-          "accepted": true,
-          "score": 6.531607283930003,
-          "hold": 1.1557081886817873,
-          "stress": 19.736890545495513,
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872"
-        },
-        {
-          "gen": 9,
-          "accepted": false,
-          "score": 6.531607283930003,
-          "hold": 1.1557081886817873,
-          "stress": 19.736890545495513,
-          "expr": "(0.8550243565946244 * x + -0.14009717264924954) * x + -1.1240994341833872"
-        }
-      ]
-    },
-    {
-      "uid": 1,
-      "seed": 11310,
-      "meta": {
-        "op_weights": {
-          "const_drift": 1.0,
-          "swap_binop": 1.0,
-          "wrap_unary": 1.2940916984988824,
-          "wrap_call": 1.0,
-          "insert_ifexp": 1.0,
-          "shrink": 1.0,
-          "grow": 0.99,
-          "graft_lib": 1.0
-        },
-        "mutation_rate": 0.5859,
-        "crossover_rate": 0.2,
-        "complexity_lambda": 0.0001,
-        "epsilon_explore": 0.07,
-        "stuck_counter": 1
-      },
-      "best": {
-        "expr": "(0.5856432113512633 * x + -0.009042502093693524) * x",
-        "gid": "208aba33582a",
-        "parents": [
-          "cd5cbd957543"
-        ],
-        "op_tag": "synth:synth_double_drift",
-        "birth_ms": 1766858120782
-      },
-      "best_score": 7.274736155342537,
-      "best_hold": 0.7772547766849666,
-      "best_stress": 22.908775146751463,
-      "pool": [
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "c6f89b58b04b",
-          "parents": [
-            "cd5cbd957543"
-          ],
-          "op_tag": "mut:grow",
-          "birth_ms": 1766858120782
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "7d4ff215bbfc",
-          "parents": [
-            "c6f89b58b04b"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858121879
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "7d4ff215bbfc",
-          "parents": [
-            "c6f89b58b04b"
-          ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858121879
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "7d4ff215bbfc",
-          "parents": [
-            "c6f89b58b04b"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858121879
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "0932605e8ac8",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "0932605e8ac8",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "0932605e8ac8",
-          "parents": [
-            "c6f89b58b04b"
-          ],
-          "op_tag": "mut:wrap_unary|pruned",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "0932605e8ac8",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "mut:wrap_unary|pruned",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244*x+0.26854881477926157)*x+0.39275325383991344+-0.39275325383991344+-0.7000912291345153",
-          "gid": "c7aceb223d9d",
-          "parents": [
-            "2ec8ffc0ce11"
-          ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "0932605e8ac8",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "0932605e8ac8",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "0932605e8ac8",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "dbe6b5071d15",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "synth:synth_shrink_wrap|pruned",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "-1.7314803752319963",
-          "gid": "6b8ab343b45b",
-          "parents": [
-            "c6f89b58b04b"
-          ],
-          "op_tag": "mut:wrap_unary",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "dbe6b5071d15",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + -0.007741271515934076) * x + -1.7314803752319963",
-          "gid": "1e62e71dde51",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "mut:const_drift",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "sqrt(0.8550243565946244 * x)",
-          "gid": "f2826ce04c06",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "mut:graft_lib",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "dbe6b5071d15",
-          "parents": [
-            "c6f89b58b04b"
-          ],
-          "op_tag": "mut:wrap_unary",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0) * x + -1.7314803752319963",
-          "gid": "dbe6b5071d15",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "crossover|pruned",
-          "birth_ms": 1766858122529
-        },
-        {
-          "expr": "(0.8550243565946244*x+0)*x+.7314803752319963",
-          "gid": "0ae24d7ca188",
-          "parents": [
-            "7d4ff215bbfc"
-          ],
-          "op_tag": "crossover",
-          "birth_ms": 1766858122529
-        }
-      ],
-      "library": {
-        "funcs": []
-      },
-      "history": [
-        {
-          "gen": 0,
-          "accepted": true,
-          "score": 177.1478386329669,
-          "hold": 6.258927510508947,
-          "stress": 579.4233789440514,
-          "expr": "1.0"
-        },
-        {
-          "gen": 1,
-          "accepted": true,
-          "score": 167.00486640376994,
-          "hold": 58.46964014074171,
-          "stress": 452.9074098494013,
-          "expr": "10"
-        },
-        {
-          "gen": 2,
-          "accepted": true,
-          "score": 142.72898827586815,
-          "hold": 56.90153022680878,
-          "stress": 375.2163728726857,
-          "expr": "10.21950067436615 + -0.7616817895988497"
-        },
-        {
-          "gen": 3,
-          "accepted": true,
-          "score": 39.00977319740322,
-          "hold": 3.0574103886526505,
-          "stress": 124.5130586401894,
-          "expr": "(x - 1) * x"
-        },
-        {
-          "gen": 4,
-          "accepted": true,
-          "score": 12.390740922850096,
-          "hold": 1.651784625832457,
-          "stress": 38.32304325402796,
-          "expr": "(0.8550243565946244 * x + 0.5) * x"
-        },
-        {
-          "gen": 5,
-          "accepted": true,
-          "score": 11.14065942620987,
-          "hold": 0.40400504990030034,
-          "stress": 36.42991084460935,
-          "expr": "(0.8550243565946244*x+0)*x"
-        },
-        {
-          "gen": 6,
-          "accepted": true,
-          "score": 9.349823937861272,
-          "hold": 0.3430330631844896,
-          "stress": 30.556628384906798,
-          "expr": "(0.8550243565946244*x+0)*x"
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 7,
           "accepted": false,
-          "score": 9.349823937861272,
-          "hold": 0.3430330631844896,
-          "stress": 30.556628384906798,
-          "expr": "(0.8550243565946244*x+0)*x"
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 8,
-          "accepted": true,
-          "score": 7.274736155342537,
-          "hold": 0.7772547766849666,
-          "stress": 22.908775146751463,
-          "expr": "(0.5856432113512633 * x + -0.009042502093693524) * x"
+          "accepted": false,
+          "score": 185.5383193062034,
+          "hold": 14.21142236591468,
+          "stress": 594.1268915080874,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
           "gen": 9,
+          "accepted": true,
+          "score": 183.28136758974023,
+          "hold": 11.261331635041904,
+          "stress": 590.6817047733938,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 10,
           "accepted": false,
-          "score": 7.274736155342537,
-          "hold": 0.7772547766849666,
-          "stress": 22.908775146751463,
-          "expr": "(0.5856432113512633 * x + -0.009042502093693524) * x"
-        }
-      ]
-    },
-    {
-      "uid": 3,
-      "seed": 31256,
-      "meta": {
-        "op_weights": {
-          "const_drift": 1.2440959769955227,
-          "swap_binop": 4.177857228682776,
-          "wrap_unary": 1.0,
-          "wrap_call": 1.0,
-          "insert_ifexp": 1.0,
-          "shrink": 1.0,
-          "grow": 1.9539774110843604,
-          "graft_lib": 1.0
-        },
-        "mutation_rate": 0.5859,
-        "crossover_rate": 0.2,
-        "complexity_lambda": 0.0001,
-        "epsilon_explore": 0.07,
-        "stuck_counter": 1
-      },
-      "best": {
-        "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-        "gid": "3075b8bf6a12",
-        "parents": [
-          "cd1c6b2cea4c"
-        ],
-        "op_tag": "mut:const_drift",
-        "birth_ms": 1766858121220
-      },
-      "best_score": 8.405414550874326,
-      "best_hold": 0.6157191548621622,
-      "best_stress": 26.91208420773498,
-      "pool": [
-        {
-          "expr": "(0.8550243565946244 * x + -0.053929176800656564) * x + 0.39275325383991344 + -0.6025283428710785",
-          "gid": "73894a5f797a",
-          "parents": [
-            "3075b8bf6a12"
-          ],
-          "op_tag": "synth:synth_double_drift",
-          "birth_ms": 1766858122110
+          "score": 183.28136758974023,
+          "hold": 11.261331635041904,
+          "stress": 590.6817047733938,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
-          "expr": "(0.8550243565946244 * x + 0.1931076019297159) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "d0e7ea8a8123",
-          "parents": [
-            "cd1c6b2cea4c"
-          ],
-          "op_tag": "mut:const_drift",
-          "birth_ms": 1766858122113
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "3075b8bf6a12",
-          "parents": [
-            "cd1c6b2cea4c"
-          ],
-          "op_tag": "mut:const_drift",
-          "birth_ms": 1766858121220
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "c16477a0e8aa",
-          "parents": [
-            "3075b8bf6a12"
-          ],
-          "op_tag": "crossover",
-          "birth_ms": 1766858122110
-        },
-        {
-          "expr": "(0.8550243565946244 * x + -0.053929176800656564) * x + 0.39275325383991344 + -0.6025283428710785",
-          "gid": "1b6e015b1659",
-          "parents": [
-            "73894a5f797a"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 + x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "14a2edf8ef03",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "mut:swap_binop",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244*x+0.20022089700236434)*x+0.39275325383991344+-0.7000912291345153",
-          "gid": "87a91ca5b2ee",
-          "parents": [
-            "ef36a4cac967"
-          ],
-          "op_tag": "crossover",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "crossover",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.5) * x",
-          "gid": "09ab12111c4a",
-          "parents": [
-            "ef36a4cac967"
-          ],
-          "op_tag": "mut:grow|pruned",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "3075b8bf6a12"
-          ],
-          "op_tag": "crossover",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "mut:grow|pruned",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "3075b8bf6a12"
-          ],
-          "op_tag": "copy|pruned",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + -0.053929176800656564) * x + 0.39275325383991344 + -0.6025283428710785",
-          "gid": "9a3c2ceb25da",
-          "parents": [
-            "73894a5f797a"
-          ],
-          "op_tag": "mut:swap_binop",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "mut:const_drift|pruned",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "3075b8bf6a12"
-          ],
-          "op_tag": "mut:swap_binop|pruned",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "floor(0.0)",
-          "gid": "3f170f831e15",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "synth:synth_shrink_wrap",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "copy|pruned",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153",
-          "gid": "00db7c486d07",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "copy",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "(0.8550243565946244 * x + -0.053929176800656564) * x + 0.39275325383991344 + -0.6025283428710785",
-          "gid": "9a3c2ceb25da",
-          "parents": [
-            "73894a5f797a"
-          ],
-          "op_tag": "mut:grow|pruned",
-          "birth_ms": 1766858123021
-        },
-        {
-          "expr": "erf((0.8550243565946244 * x + 0.20022089700236434) * x)",
-          "gid": "9b188b5ad553",
-          "parents": [
-            "c16477a0e8aa"
-          ],
-          "op_tag": "mut:wrap_call",
-          "birth_ms": 1766858123021
-        }
-      ],
-      "library": {
-        "funcs": []
-      },
-      "history": [
-        {
-          "gen": 0,
-          "accepted": true,
-          "score": 228.87876940242703,
-          "hold": 7.069271634468154,
-          "stress": 750.8234607067575,
-          "expr": "1.0"
-        },
-        {
-          "gen": 1,
-          "accepted": true,
-          "score": 168.05590689041315,
-          "hold": 59.86475574308656,
-          "stress": 454.93679675668,
-          "expr": "10"
-        },
-        {
-          "gen": 2,
-          "accepted": true,
-          "score": 139.2953388597558,
-          "hold": 62.73540987956028,
-          "stress": 354.1678689291119,
-          "expr": "10"
-        },
-        {
-          "gen": 3,
+          "gen": 11,
           "accepted": false,
-          "score": 139.2953388597558,
-          "hold": 62.73540987956028,
-          "stress": 354.1678689291119,
-          "expr": "10"
+          "score": 183.28136758974023,
+          "hold": 11.261331635041904,
+          "stress": 590.6817047733938,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         },
         {
-          "gen": 4,
-          "accepted": true,
-          "score": 129.65556474891218,
-          "hold": 35.659845737191105,
-          "stress": 369.17317048609397,
-          "expr": "10 + -1.6659426282670642"
-        },
-        {
-          "gen": 5,
-          "accepted": true,
-          "score": 42.62494660765731,
-          "hold": 2.26816946169933,
-          "stress": 138.0397255712409,
-          "expr": "(x - 1) * x"
-        },
-        {
-          "gen": 6,
-          "accepted": true,
-          "score": 13.59279540715597,
-          "hold": 1.415431322742857,
-          "stress": 42.832658634650585,
-          "expr": "(0.8550243565946244 * x + 0.3842718562719887) * x + 0.39275325383991344 + -0.7000912291345153"
-        },
-        {
-          "gen": 7,
-          "accepted": true,
-          "score": 10.846374320829552,
-          "hold": 1.3348636463811367,
-          "stress": 33.83086539365125,
-          "expr": "(0.8550243565946244 * x + 0.3842718562719887) * x + 0.39275325383991344 + -0.7000912291345153"
-        },
-        {
-          "gen": 8,
-          "accepted": true,
-          "score": 8.405414550874326,
-          "hold": 0.6157191548621622,
-          "stress": 26.91208420773498,
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153"
-        },
-        {
-          "gen": 9,
+          "gen": 12,
           "accepted": false,
-          "score": 8.405414550874326,
-          "hold": 0.6157191548621622,
-          "stress": 26.91208420773498,
-          "expr": "(0.8550243565946244 * x + 0.20022089700236434) * x + 0.39275325383991344 + -0.7000912291345153"
+          "score": 183.28136758974023,
+          "hold": 11.261331635041904,
+          "stress": 590.6817047733938,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 13,
+          "accepted": false,
+          "score": 183.28136758974023,
+          "hold": 11.261331635041904,
+          "stress": 590.6817047733938,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
+        },
+        {
+          "gen": 14,
+          "accepted": false,
+          "score": 183.28136758974023,
+          "hold": 11.261331635041904,
+          "stress": 590.6817047733938,
+          "code": "def run(x):\n    # 06ae6c82f144\n    _steps=0\n    v0=x\n    return x"
         }
       ]
     }
   ],
-  "selected_uid": 2,
-  "generations_done": 10
+  "selected_uid": 1,
+  "generations_done": 15
 }
