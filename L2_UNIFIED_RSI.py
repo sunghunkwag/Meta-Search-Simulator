@@ -167,10 +167,43 @@ def safe_exec(code: str, x: float, timeout_steps: int=1000) -> float:
             
         res = env['run'](x) # [MOD] Removed float() cast for List support
         return res
+        return res
     except StepLimitExceeded:
         return float('nan')
     except Exception:
         return float('nan')
+
+def apply_patch_safe(target_file: str, new_content: str) -> bool:
+    """[NEW] Phase 5: Test-Driven Repair (TDR) - Atomic Patching"""
+    import shutil
+    bak = target_file + ".bak"
+    try:
+        print(f"[TDR] Applying atomic patch to {target_file}...")
+        shutil.copy(target_file, bak)
+        with open(target_file, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        
+        # 1. Syntax Check
+        try:
+             ast.parse(new_content)
+        except SyntaxError as e:
+             raise ValueError(f"Syntax Error: {e}")
+             
+        # 2. Import Check (Regression)
+        # Only check if it's a python file
+        if target_file.endswith('.py'):
+            # Run basic import test
+            cmd = f'python -c "import sys; sys.path.append(\'.\'); import {os.path.basename(target_file)[:-3]} as m; print(m.__name__)"'
+            ret = os.system(cmd)
+            if ret != 0:
+                raise RuntimeError("Import Verification Failed")
+
+        print("[TDR] Patch Verified. Commit.")
+        return True
+    except Exception as e:
+        print(f"[TDR] Patch Validation Failed: {e}. Rolling back.")
+        shutil.move(bak, target_file)
+        return False
 
 def safe_exec_engine(code: str, context: Dict[str, Any], timeout_steps: int=5000) -> Any:
     """Execute meta-engine code (selection/crossover) with safety limits."""
