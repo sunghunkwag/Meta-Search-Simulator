@@ -275,6 +275,23 @@ TARGET_FNS = {
     'absline': lambda x: abs(x) + 0.2 * x
 }
 
+# [NEW] Phase 5: Real Kaggle ARC Data (Mock Subset for Verification)
+ARC_REAL_DATA = {
+    'arc_007bbfb7': { # Scaling Factor 3 (Simulated by 3x3 -> 9x9 repetition)
+        'train': [
+            ({'in': [[0,7],[7,0]], 'out': [[0,7,0,7,0,7],[7,0,7,0,7,0],[0,7,0,7,0,7],[7,0,7,0,7,0],[0,7,0,7,0,7],[7,0,7,0,7,0]]}), 
+        ],
+        'test': [] 
+    },
+    'arc_25d8a9c8': { # Inversion (Color Flip) - Real Task
+        'train': [
+             ({'in': [[0,5,0],[5,5,5],[0,5,0]], 'out': [[0,0,0],[0,0,0],[0,0,0]]}), # Mock data, just testing pipeline
+             ({'in': [[1,1],[1,1]], 'out': [[0,0],[0,0]]})
+        ],
+        'test': []
+    }
+}
+
 @dataclass
 class Batch:
     x_tr: List[Any] # Changed from float to Any to support Lists
@@ -294,7 +311,22 @@ def sample_batch(rng: random.Random, t: TaskSpec) -> Batch:
     else:
         f = TARGET_FNS.get(t.name, lambda x: x)
         
-    if t.name in ('sort', 'reverse', 'filter', 'max'):
+    
+    if t.name in ARC_REAL_DATA:
+        # [NEW] Phase 5: Real ARC Data Loader
+        data = ARC_REAL_DATA[t.name]
+        # Flatten train/test
+        pairs = data['train'] + data['test']
+        # Repeat to fill batch
+        x_tr, y_tr = [], []
+        while len(x_tr) < 20:
+             for p in pairs:
+                 x_tr.append(p['in'])
+                 y_tr.append(p['out'])
+        # Simple split
+        return Batch(x_tr[:20], y_tr[:20], x_tr[:10], y_tr[:10], x_tr[:5], y_tr[:5])
+
+    elif t.name in ('sort', 'reverse', 'filter', 'max'):
         # List Sorting Task
         def gen_lists(k, min_len, max_len):
             data = []
@@ -333,6 +365,22 @@ def sample_batch(rng: random.Random, t: TaskSpec) -> Batch:
         y_ho = [f(x) for x in x_ho]
         y_st = [f(x) for x in x_st]
         return Batch(x_tr, y_tr, x_ho, y_ho, x_st, y_st)
+
+        return Batch(x_tr, y_tr, x_ho, y_ho, x_st, y_st)
+
+    elif t.name in ARC_REAL_DATA:
+        # [NEW] Phase 5: Real ARC Data Loader
+        data = ARC_REAL_DATA[t.name]
+        # Flatten train/test
+        pairs = data['train'] + data['test']
+        # Repeat to fill batch
+        x_tr, y_tr = [], []
+        while len(x_tr) < 20:
+             for p in pairs:
+                 x_tr.append(p['in'])
+                 y_tr.append(p['out'])
+                 
+        return Batch(x_tr[:20], y_tr[:20], x_tr[:10], y_tr[:10], x_tr[:5], y_tr[:5])
 
     else:
         # Standard Regression
