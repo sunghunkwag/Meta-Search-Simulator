@@ -4711,7 +4711,10 @@ def _autopatch_evolve_score(
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
     if result.returncode != 0:
         return float("inf")
-    return _current_best_score(_load_state_snapshot(state_dir))
+    snapshot = _load_state_snapshot(state_dir)
+    if not snapshot:
+        return float("inf")
+    return _current_best_score(snapshot)
 
 def _autopatch_probe_score(
     mode: str,
@@ -4940,9 +4943,11 @@ def run_deep_autopatch(
 
     rng = random.Random(int(time.time()) % 100000)
     patch_candidates: List[Dict[str, Any]] = []
+    attempt_idx = 0
 
     for level in levels:
         for _ in range(candidates):
+            attempt_idx += 1
             tree = ast.parse(source)
             patch_type = ""
             mutated_source = source
@@ -4979,18 +4984,21 @@ def run_deep_autopatch(
                 if mutated_source != source:
                     script_path = tmp_state_dir / script.name
                     script_path.write_text(mutated_source, encoding="utf-8")
+                attempt_seed = seed + attempt_idx
+                print(f"[DEBUG] Running evolution with params: {mutated_params}")
                 new_score = _autopatch_evolve_score(
                     script_path,
                     tmp_state_dir,
                     mode,
                     task_name,
-                    seed,
-                    generations=10,
+                    attempt_seed,
+                    generations=30,
                     population=population,
                     universes=universes,
                     resume=state_snapshot is not None,
                     freeze_eval=True,
                 )
+                print(f"[DEBUG] Evolution returned best_score: {new_score}")
             improvement = baseline - new_score
             accepted = improvement > 0
             record = {
