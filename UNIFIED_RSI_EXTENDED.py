@@ -4,14 +4,6 @@ UNIFIED_RSI_EXTENDED.py
 True RSI (Recursive Self-Improvement) Engine - BETA (Executable)
 ================================================================
 
-RSI Levels:
-- L0: Hyperparameter tuning
-- L1: Operator weight adaptation (source-patchable via OP_WEIGHT_INIT)
-- L2: Add/remove mutation operators (runtime library evolution)
-- L3: Modify evaluation function weights
-- L4: Persist learned operators into source (optional; markers supported)
-- L5: Modify self-modification logic (simple source edits)
-
 CLI:
   python UNIFIED_RSI_EXTENDED.py selftest
   python UNIFIED_RSI_EXTENDED.py evolve --fresh --generations 100
@@ -22,7 +14,6 @@ CLI:
   python UNIFIED_RSI_EXTENDED.py task-switch --task-a poly2 --task-b piecewise
   python UNIFIED_RSI_EXTENDED.py report --state-dir .rsi_state
   python UNIFIED_RSI_EXTENDED.py transfer-bench --from poly2 --to piecewise --budget 10
-  python UNIFIED_RSI_EXTENDED.py autopatch --levels 0,1,3 --apply
   python UNIFIED_RSI_EXTENDED.py rsi-loop --generations 50 --rounds 10
   python UNIFIED_RSI_EXTENDED.py rsi-loop --generations 20 --rounds 5 --mode learner
 
@@ -30,7 +21,6 @@ CHANGELOG
 ---------
 L0: Solver supports expression genomes and strict program-mode genomes (Assign/If/Return only).
 L1: RuleDSL controls mutation/crossover/novelty/acceptance/curriculum knobs per generation.
-L2: Meta-meta loop proposes RuleDSL patches and accepts only when meta-test transfer improves.
 Metrics: frozen train/hold/stress/test sets, per-gen logs, and transfer report (AUC/regret/recovery/gap).
 Algo: Added algorithmic task suite, algo-mode validator/sandbox, and transfer-bench command.
 """
@@ -4421,280 +4411,108 @@ def transfer_bench(
 
 
 # ---------------------------
-# Self-modification (AutoPatch)
+# RSI Loop (Hard Gates + Rollback)
 # ---------------------------
 
-PATCH_LEVELS = {
-    0: "hyperparameter",
-    1: "op_weight",
-    2: "operator_toggle",
-    3: "eval_weight",
-    4: "operator_persist",
-    5: "meta_logic",
-    6: "dsl_extension",
-}
+STRESS_MAX = 1_000_000.0
+RSI_CONFIRM_ROUNDS = 2
 
-@dataclass
-class PatchPlan:
-    level: int
-    patch_id: str
-    title: str
-    rationale: str
-    new_source: str
-    diff: str
+def _outputs_constant(outputs: List[Any], tol: float = 1e-9) -> bool:
+    if not outputs:
+        return True
+    first = outputs[0]
+    if isinstance(first, (int, float)):
+        return all(isinstance(o, (int, float)) and abs(o - first) <= tol for o in outputs[1:])
+    return all(_algo_equal(o, first) for o in outputs[1:])
 
-def _read_self() -> str:
-    return Path(__file__).read_text(encoding="utf-8")
+def _piecewise_constant(outputs: List[Any], max_unique: int = 2) -> bool:
+    if not outputs:
+        return True
+    uniques: List[Any] = []
+    for out in outputs:
+        if not any(_algo_equal(out, seen) for seen in uniques):
+            uniques.append(out)
+        if len(uniques) > max_unique:
+            return False
+    return True
 
-def _patch_dataclass(src: str, cls: str, field_name: str, val: Any) -> Tuple[bool, str]:
+def _collect_outputs(code: str, xs: List[Any], mode: str, extra_env: Optional[Dict[str, Any]] = None) -> Tuple[bool, List[Any], str]:
+    outputs: List[Any] = []
+    if mode == "learner":
+        env = safe_load_module(code)
+        if not env:
+            return False, [], "load_failed"
+        required = ["init_mem", "encode", "predict"]
+        if not all(name in env and callable(env[name]) for name in required):
+            return False, [], "missing_funcs"
+        mem = env["init_mem"]()
+        encode = env["encode"]
+        predict = env["predict"]
+        for x in xs:
+            try:
+                z = encode(x, mem)
+                out = predict(z, mem)
+            except Exception:
+                return False, [], "exec_error"
+            outputs.append(out)
+        return True, outputs, ""
+    if mode == "algo":
+        for x in xs:
+            out, _, timeout = safe_exec_algo(code, x)
+            if timeout:
+                return False, [], "timeout"
+            outputs.append(out)
+        return True, outputs, ""
+    for x in xs:
+        out = safe_exec(code, x, extra_env=extra_env)
+        if out is None:
+            return False, [], "no_output"
+        outputs.append(out)
+    return True, outputs, ""
+
+def _hard_gate_ok(code: str, batch: Batch, mode: str, task_name: str) -> Tuple[bool, str]:
+    xs = batch.x_ho[:8] if batch.x_ho else batch.x_tr[:8]
+    if not xs:
+        return False, "no_inputs"
+    ok, outputs, err = _collect_outputs(code, xs, mode)
+    if not ok:
+        return False, err
+    if _outputs_constant(outputs):
+        return False, "constant_output"
+    if _piecewise_constant(outputs):
+        return False, "piecewise_constant"
+    return True, ""
+
+def _evaluate_candidate(g: Union[Genome, LearnerGenome], batch: Batch, mode: str, task_name: str) -> EvalResult:
+    if mode == "learner":
+        return evaluate_learner(g, batch, task_name)
+    if mode == "algo":
+        return evaluate_algo(g, batch, task_name)
+    return evaluate(g, batch, task_name)
+
+def _merge_stress(fixed: Batch, resampled: Batch) -> Batch:
+    return Batch(
+        x_tr=resampled.x_tr,
+        y_tr=resampled.y_tr,
+        x_ho=resampled.x_ho,
+        y_ho=resampled.y_ho,
+        x_st=fixed.x_st + resampled.x_st,
+        y_st=fixed.y_st + resampled.y_st,
+        x_te=resampled.x_te,
+        y_te=resampled.y_te,
+    )
+
+def _load_rsi_archive(path: Path) -> Dict[str, Any]:
+    if not path.exists():
+        return {"entries": [], "current": None, "consecutive": 0}
     try:
-        mod = ast.parse(src)
-        patched = False
-        for node in ast.walk(mod):
-            if isinstance(node, ast.ClassDef) and node.name == cls:
-                for stmt in node.body:
-                    if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name) and stmt.target.id == field_name:
-                        stmt.value = ast.Constant(value=val)
-                        patched = True
-        if not patched:
-            return (False, src)
-        ast.fix_missing_locations(mod)
-        return (True, ast.unparse(mod))
+        return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
-        return (False, src)
+        return {"entries": [], "current": None, "consecutive": 0}
 
-def _patch_global_const(src: str, name: str, val: float) -> Tuple[bool, str]:
-    pattern = f"^({re.escape(name)}\\s*=\\s*)[\\d.eE+-]+"
-    new_src, n = re.subn(pattern, f"\\g<1>{val}", src, flags=re.MULTILINE)
-    return (n > 0, new_src)
-
-def _patch_dict_const(src: str, dict_name: str, key: str, val: float) -> Tuple[bool, str]:
-    try:
-        mod = ast.parse(src)
-        patched = False
-        for node in ast.walk(mod):
-            if isinstance(node, ast.Assign):
-                for t in node.targets:
-                    if isinstance(t, ast.Name) and t.id == dict_name and isinstance(node.value, ast.Dict):
-                        # find key
-                        for i, k in enumerate(node.value.keys):
-                            if isinstance(k, ast.Constant) and k.value == key:
-                                node.value.values[i] = ast.Constant(value=float(val))
-                                patched = True
-        if not patched:
-            return (False, src)
-        ast.fix_missing_locations(mod)
-        return (True, ast.unparse(mod))
-    except Exception:
-        return (False, src)
-
-def _rewrite_operators_block(src: str, new_lib: Dict) -> str:
-    pattern = r"(# @@OPERATORS_LIB_START@@\s*\nOPERATORS_LIB:\s*Dict\[str,\s*Dict\]\s*=\s*)(\{.*?\})(\s*\n# @@OPERATORS_LIB_END@@)"
-    match = re.search(pattern, src, flags=re.DOTALL)
-    if not match:
-        return src
-    prefix, _, suffix = match.group(1), match.group(2), match.group(3)
-    lines = ["{"]
-    for name, spec in new_lib.items():
-        lines.append(f'    "{name}": {json.dumps(spec)},')
-    lines.append("}")
-    new_dict = "\n".join(lines)
-    return src[: match.start()] + prefix + new_dict + suffix + src[match.end():]
-
-def _patch_safe_funcs(src: str, name: str, expr: str) -> Tuple[bool, str]:
-    try:
-        mod = ast.parse(src)
-        patched = False
-        for node in ast.walk(mod):
-            if isinstance(node, ast.Assign):
-                for t in node.targets:
-                    if isinstance(t, ast.Name) and t.id == "SAFE_FUNCS" and isinstance(node.value, ast.Dict):
-                        keys = node.value.keys
-                        values = node.value.values
-                        if any(isinstance(k, ast.Constant) and k.value == name for k in keys):
-                            return (False, src)
-                        keys.append(ast.Constant(value=name))
-                        values.append(ast.parse(expr, mode="eval").body)
-                        patched = True
-        if not patched:
-            return (False, src)
-        ast.fix_missing_locations(mod)
-        return (True, ast.unparse(mod))
-    except Exception:
-        return (False, src)
-
-def propose_patches(gs: GlobalState, levels: List[int]) -> List[PatchPlan]:
-    src = _read_self()
-    plans: List[PatchPlan] = []
-    rng = random.Random(gs.updated_ms)
-
-    best_u = next((s for s in gs.universes if s.get("uid") == gs.selected_uid), gs.universes[0] if gs.universes else {})
-    meta = best_u.get("meta", {})
-
-    # L0: tune hyperparams (dataclass literal fields)
-    if 0 in levels:
-        for cls, field_name, base in [
-            ("MetaState", "mutation_rate", 0.65),
-            ("MetaState", "crossover_rate", 0.2),
-            ("MetaState", "epsilon_explore", 0.15),
-        ]:
-            cur = meta.get(field_name, base)
-            new_val = round(clamp(cur * rng.uniform(0.85, 1.15), 0.1, 0.95), 4)
-            ok, new_src = _patch_dataclass(src, cls, field_name, new_val)
-            if ok and new_src != src:
-                plans.append(PatchPlan(
-                    0,
-                    sha256(f"{cls}.{field_name}={new_val}")[:8],
-                    f"L0: {cls}.{field_name} -> {new_val}",
-                    "Adaptive tuning",
-                    new_src,
-                    unified_diff(src, new_src, "script.py"),
-                ))
-
-    # L1: patch OP_WEIGHT_INIT dict entries (source-patchable now)
-    if 1 in levels:
-        op_w = meta.get("op_weights", {})
-        # pick a few ops to perturb
-        if isinstance(op_w, dict) and op_w:
-            ops = list(op_w.items())[: min(4, len(op_w))]
-        else:
-            ops = list(OP_WEIGHT_INIT.items())[:4]
-        new_src = src
-        changed = False
-        for op, w in ops:
-            new_w = round(clamp(float(w) * rng.uniform(0.9, 1.1), 0.1, 5.0), 3)
-            ok, new_src2 = _patch_dict_const(new_src, "OP_WEIGHT_INIT", op, new_w)
-            if ok and new_src2 != new_src:
-                changed = True
-                new_src = new_src2
-        if changed and new_src != src:
-            plans.append(PatchPlan(
-                1,
-                sha256("L1:" + str(rng.random()))[:8],
-                "L1: OP_WEIGHT_INIT perturb",
-                "Operator-weight prior update",
-                new_src,
-                unified_diff(src, new_src, "script.py"),
-            ))
-
-    # L3: rebalance eval weights
-    if 3 in levels:
-        for name, base in [("SCORE_W_HOLD", 0.6), ("SCORE_W_STRESS", 0.35), ("SCORE_W_TRAIN", 0.05)]:
-            new_val = round(clamp(base * rng.uniform(0.8, 1.2), 0.05, 0.9), 2)
-            ok, new_src = _patch_global_const(src, name, new_val)
-            if ok and new_src != src:
-                plans.append(PatchPlan(
-                    3,
-                    sha256(f"{name}={new_val}")[:8],
-                    f"L3: {name} -> {new_val}",
-                    "Eval rebalancing",
-                    new_src,
-                    unified_diff(src, new_src, "script.py"),
-                ))
-
-    # L4: persist OPERATORS_LIB into source (optional)
-    if 4 in levels and OPERATORS_LIB:
-        new_src = _rewrite_operators_block(src, OPERATORS_LIB)
-        if new_src != src:
-            plans.append(PatchPlan(
-                4,
-                sha256(str(OPERATORS_LIB))[:8],
-                f"L4: Persist {len(OPERATORS_LIB)} learned operators",
-                f"Operators: {list(OPERATORS_LIB.keys())[:5]}",
-                new_src,
-                unified_diff(src, new_src, "script.py"),
-            ))
-
-    # L5: simple meta-logic edits (conservative)
-    if 5 in levels:
-        elite_mods = [
-            ("max(4, pop_size // 10)", "max(4, pop_size // 8)"),
-            ("max(4, pop_size // 8)", "max(4, pop_size // 12)"),
-            ("max(4, pop_size // 12)", "max(4, pop_size // 10)"),
-        ]
-        for old_pat, new_pat in elite_mods:
-            if old_pat in src:
-                new_src = src.replace(old_pat, new_pat, 1)
-                plans.append(PatchPlan(
-                    5,
-                    sha256(new_pat)[:8],
-                    "L5: elite ratio change",
-                    "Meta: selection pressure",
-                    new_src,
-                    unified_diff(src, new_src, "script.py"),
-                ))
-                break
-
-    # L6: extend DSL primitives (new safe operators)
-    if 6 in levels:
-        candidates = [
-            ("relu", "lambda x: x if x > 0 else 0"),
-            ("clip", "lambda x: clamp(x, -1.0, 1.0)"),
-            ("cube", "lambda x: x * x * x"),
-        ]
-        rng.shuffle(candidates)
-        for name, expr in candidates:
-            if name in SAFE_FUNCS:
-                continue
-            ok, new_src = _patch_safe_funcs(src, name, expr)
-            if ok and new_src != src:
-                plans.append(PatchPlan(
-                    6,
-                    sha256(f"{name}:{expr}")[:8],
-                    f"L6: add SAFE_FUNCS.{name}",
-                    "Extend DSL with new primitive operator",
-                    new_src,
-                    unified_diff(src, new_src, "script.py"),
-                ))
-                break
-
-    rng.shuffle(plans)
-    return plans[:8]
-
-def _probe_tasks(task_name: str) -> List[str]:
-    if task_name == "poly2":
-        return ["poly2", "poly3"]
-    if task_name in ("sort", "reverse", "filter", "max"):
-        return [task_name, "reverse" if task_name != "reverse" else "sort"]
-    return [task_name]
-
-def probe_run(script: Path, mode: str, task_name: str, gens: int = 5, pop: int = 16) -> float:
-    """PHASE D: probe on multiple seeds/tasks to avoid overfitting."""
-    seeds = [11, 23, 37]
-    tasks = _probe_tasks(task_name)
-    scores: List[float] = []
-    cmd_name = "learner-evolve" if mode == "learner" else "evolve"
-
-    with tempfile.TemporaryDirectory() as td:
-        for seed in seeds:
-            for task in tasks:
-                try:
-                    proc = subprocess.run(
-                        [sys.executable, str(script), cmd_name, "--fresh", "--generations", str(gens),
-                         "--population", str(pop), "--universes", "1", "--state-dir", td, "--seed", str(seed), "--task", task],
-                        capture_output=True,
-                        text=True,
-                        timeout=120,
-                    )
-                    for line in reversed(proc.stdout.splitlines()):
-                        if "Score:" in line:
-                            m = re.search(r"Score:\s*([\d.]+)", line)
-                            if m:
-                                scores.append(float(m.group(1)))
-                                break
-                except Exception:
-                    scores.append(float("inf"))
-    if not scores:
-        return float("inf")
-    return sum(scores) / len(scores)
-
-def run_deep_autopatch(levels: List[int], candidates: int = 4, apply: bool = False, mode: str = "solver") -> Dict:
-    gs = load_state()
-    if not gs:
-        return {"error": "No state. Run evolve first."}
-
-    mode = mode or gs.mode
-    task_name = gs.task.get("name", "poly2") if isinstance(gs.task, dict) else "poly2"
+def _save_rsi_archive(path: Path, archive: Dict[str, Any]) -> None:
+    safe_mkdir(path.parent)
+    path.write_text(json.dumps(archive, indent=2), encoding="utf-8")
 
     script = Path(__file__).resolve()
     baseline = probe_run(script, mode, task_name)
@@ -4788,6 +4606,15 @@ def run_rsi_loop(
             few_shot_gens=max(3, gens_per_round // 2),
         )
         print(f"\n[RSI LOOP COMPLETE] {rounds} meta-meta rounds finished")
+        return
+
+    archive_path = STATE_DIR / "rsi_archive.json"
+    archive = _load_rsi_archive(archive_path)
+    if archive.get("current") and "genome" not in archive["current"]:
+        archive = {"entries": [], "current": None, "consecutive": 0}
+    fixed_batch = get_task_batch(task, seed, freeze_eval=True, gen=0)
+    if fixed_batch is None:
+        print("[RSI] No batch available; aborting.")
         return
 
     for r in range(rounds):
@@ -4908,15 +4735,6 @@ def cmd_best(args):
     print(f"Generations: {gs.generations_done}")
     return 0
 
-def cmd_autopatch(args):
-    global STATE_DIR
-    STATE_DIR = Path(args.state_dir)
-    levels = [int(l) for l in args.levels.split(",") if l.strip()]
-    mode = args.mode or ""
-    result = run_deep_autopatch(levels, args.candidates, args.apply, mode=mode)
-    print(json.dumps(result, indent=2, default=str))
-    return 0
-
 def cmd_rsi_loop(args):
     global STATE_DIR
     STATE_DIR = Path(args.state_dir)
@@ -4983,7 +4801,7 @@ def cmd_transfer_bench(args):
     return 0
 
 def build_parser():
-    p = argparse.ArgumentParser(prog="UNIFIED_RSI_EXTENDED", description="True RSI Engine with L0-L5 Self-Modification")
+    p = argparse.ArgumentParser(prog="UNIFIED_RSI_EXTENDED", description="True RSI Engine with hard gates and rollback")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     s = sub.add_parser("selftest")
@@ -5020,18 +4838,9 @@ def build_parser():
     b.add_argument("--state-dir", default=".rsi_state")
     b.set_defaults(fn=cmd_best)
 
-    a = sub.add_parser("autopatch")
-    a.add_argument("--levels", default="0,1,3")
-    a.add_argument("--candidates", type=int, default=4)
-    a.add_argument("--apply", action="store_true")
-    a.add_argument("--state-dir", default=".rsi_state")
-    a.add_argument("--mode", default="", choices=["", "solver", "learner", "algo"])
-    a.set_defaults(fn=cmd_autopatch)
-
     r = sub.add_parser("rsi-loop")
     r.add_argument("--generations", type=int, default=50)
     r.add_argument("--rounds", type=int, default=5)
-    r.add_argument("--levels", default="0,1,3")
     r.add_argument("--population", type=int, default=64)
     r.add_argument("--universes", type=int, default=2)
     r.add_argument("--state-dir", default=".rsi_state")

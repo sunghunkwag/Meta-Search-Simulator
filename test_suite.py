@@ -1,17 +1,15 @@
 #!/usr/bin/env python
 """
 Comprehensive Verification Suite for UNIFIED_RSI_EXTENDED.py
-Tests: EDA, ARC Loading, Patch Safety, Algorithmic Tasks, Meta Autopatch
+Tests: EDA, ARC Loading, Algorithmic Tasks
 """
 
 import sys
 import random
 import time
-import ast
 from UNIFIED_RSI_EXTENDED import (
-    TaskSpec, Universe, MetaState, FunctionLibrary, GlobalState,
-    GRAMMAR_PROBS, load_arc_task, get_arc_tasks, sample_batch,
-    propose_patches, run_deep_autopatch, save_state
+    TaskSpec, Universe, MetaState, FunctionLibrary,
+    GRAMMAR_PROBS, load_arc_task, get_arc_tasks, sample_batch
 )
 
 def test_eda_grammar_learning():
@@ -125,81 +123,6 @@ def test_arc_json_loading():
         print(f"❌ FAIL: Could not load task '{tid}'")
         return False
 
-def test_patch_plan_safety():
-    """Test 4: Patch Plan Syntax Safety"""
-    print("\n" + "="*60)
-    print("TEST 4: Patch Plan Syntax Safety")
-    print("="*60)
-    
-    meta = MetaState(mutation_rate=0.5)
-    uni = Universe(uid=1, seed=123, meta=meta, pool=[], library=FunctionLibrary())
-    gs = GlobalState('v1', 0, 0, 123, {'name': 'test'}, [uni.snapshot()], 1, 0)
-    plans = propose_patches(gs, levels=[0, 1, 3])
-
-    if not plans:
-        print("❌ FAIL: No patch plans generated")
-        return False
-
-    for plan in plans:
-        try:
-            ast.parse(plan.new_source)
-        except SyntaxError as e:
-            print(f"❌ FAIL: Patch {plan.patch_id} generated invalid syntax: {e}")
-            return False
-
-    print(f"✅ PASS: {len(plans)} patch plans parsed successfully")
-    return True
-
-def test_meta_autopatch():
-    """Test 5: Meta-RSI Autopatch (Mocked)"""
-    print("\n" + "="*60)
-    print("TEST 5: Meta-RSI Autopatch (L0-L5)")
-    print("="*60)
-    
-    # Create a dummy state
-    meta = MetaState(mutation_rate=0.5)
-    uni = Universe(uid=1, seed=123, meta=meta, pool=[], library=FunctionLibrary())
-    uni.best_score = 10.0
-    gs = GlobalState('v1', 0, 0, 123, {'name':'test'}, [uni.snapshot()], 1, 10)
-    save_state(gs)
-    
-    # 2. Mock probe_run to simulate improvement
-    import UNIFIED_RSI_EXTENDED as rsi
-    original_probe = rsi.probe_run
-    
-    def mock_probe(script, gens=0, pop=0):
-        # First call (baseline) -> 10.0
-        # Subsequent calls (patch) -> 9.0
-        if not hasattr(mock_probe, 'calls'): mock_probe.calls = 0
-        mock_probe.calls += 1
-        return 10.0 if mock_probe.calls == 1 else 9.0
-        
-    rsi.probe_run = mock_probe
-    
-    try:
-        # Run autopatch L0 (Hyperparams)
-        print("Running Autopatch L0 (Mocked)...")
-        result = run_deep_autopatch(levels=[0], candidates=2, apply=False)
-        
-        print(f"Result: {result}")
-        if result.get('improved') or result.get('best'):
-            print("✅ PASS: Autopatch found improvement (Mocked)")
-            return True
-        else:
-            if 'results' in result and result['results']:
-                 print("✅ PASS: Autopatch generated plans (even if not applied)")
-                 return True
-            print("❌ FAIL: No plans generated")
-            return False
-            
-    except Exception as e:
-        print(f"❌ FAIL: Autopatch error: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
-    finally:
-        rsi.probe_run = original_probe
-
 def run_all_tests():
     """Run complete verification suite"""
     print("\n" + "█"*60)
@@ -209,9 +132,7 @@ def run_all_tests():
     tests = [
         ("EDA Grammar Learning", test_eda_grammar_learning),
         ("Algorithmic Tasks", test_algorithmic_tasks),
-        ("ARC JSON Loading", test_arc_json_loading),
-        ("Patch Plan Safety", test_patch_plan_safety),
-        ("Meta-RSI Autopatch", test_meta_autopatch)
+        ("ARC JSON Loading", test_arc_json_loading)
     ]
     
     results = []
