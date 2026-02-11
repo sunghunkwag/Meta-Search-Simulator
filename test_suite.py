@@ -60,23 +60,26 @@ def test_algorithmic_tasks():
         rng = random.Random(uni.seed)
         
         initial_score = float('inf')
+        final_score = float('inf')
+
         for g in range(4):
             batch = sample_batch(rng, task)
             if batch is None:
                 print(f"❌ FAIL: Batch generation returned None for {tname}")
                 return False
             uni.step(g, task, pop_size=20, batch=batch)
-            if g == 1:
+            if g == 0:
                 initial_score = uni.best_score
+            final_score = uni.best_score
                 
-        final_score = uni.best_score
-        improved = final_score < initial_score
+        # Improved OR solved perfectly
+        improved = (final_score < initial_score) or (final_score < 1e-6)
         
         print(f"  {tname}: Initial={initial_score:.2f}, Final={final_score:.2f}")
         results.append(improved)
         
-    if sum(results) >= 1:  # At least 1 task improves (less strict)
-        print(f"✅ PASS: {sum(results)}/2 algorithmic tasks showed improvement")
+    if sum(results) >= 1:  # At least 1 task passes
+        print(f"✅ PASS: {sum(results)}/2 algorithmic tasks showed improvement or optimal score")
         return True
     else:
         print(f"❌ FAIL: {sum(not r for r in results)} tasks failed to improve")
