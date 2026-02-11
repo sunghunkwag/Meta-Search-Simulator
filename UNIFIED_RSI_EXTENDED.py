@@ -1682,7 +1682,7 @@ def safe_exec(code: str, x: Any, timeout_steps: int = 1000, extra_env: Optional[
         if extra_env:
             env.update(extra_env)
 
-        exec(compile(tree, "<lgp>", "exec"), {"__builtins__": {}}, env)
+        env["__builtins__"] = {}; exec(compile(tree, "<lgp>", "exec"), env)
         if "run" not in env:
             return float("nan")
         return env["run"](x)
@@ -1712,7 +1712,7 @@ def safe_exec_algo(
         if extra_env:
             env.update(extra_env)
 
-        exec(compile(tree, "<algo>", "exec"), {"__builtins__": {}}, env)
+        env["__builtins__"] = {}; exec(compile(tree, "<algo>", "exec"), env)
         if "run" not in env:
             return (None, env.get("_steps", 0), True)
         out = env["run"](inp)
@@ -1769,7 +1769,7 @@ def safe_load_module(code: str, timeout_steps: int = 5000) -> Optional[Dict[str,
         env: Dict[str, Any] = {"_steps": 0, "StepLimitExceeded": StepLimitExceeded}
         env.update(SAFE_FUNCS)
         env.update(SAFE_BUILTINS)
-        exec(compile(tree, "<learner>", "exec"), {"__builtins__": {}}, env)
+        env["__builtins__"] = {}; exec(compile(tree, "<learner>", "exec"), env)
         return env
     except Exception:
         return None
@@ -2725,6 +2725,113 @@ def evaluate(
     return EvalResult(ok, tr, ho, st, te, nodes, score, err or None)
 
 
+
+import math
+import collections
+
+class PUCTNode:
+    def __init__(self, state, parent=None, action=None, prior=0.0):
+        self.state = state
+        self.parent = parent
+        self.action = action
+        self.children = {}  # action -> PUCTNode
+        self.visit_count = 0
+        self.value_sum = 0.0
+        self.prior = prior
+
+    def is_expanded(self):
+        return len(self.children) > 0
+
+    def value(self):
+        if self.visit_count == 0:
+            return 0.0
+        return self.value_sum / self.visit_count
+
+def puct_search(root_state, expand_fn, value_fn, n_sims=50, c_puct=1.0):
+    """
+    Perform PUCT search.
+    expand_fn(state) -> list of (action, next_state, prior)
+    value_fn(state) -> float (value estimate)
+    """
+    root = PUCTNode(root_state)
+
+    for _ in range(n_sims):
+        node = root
+        search_path = [node]
+
+        # Select
+        while node.is_expanded():
+            best_score = -float('inf')
+            best_action = None
+            best_child = None
+
+            total_sqrt = math.sqrt(node.visit_count)
+            for action, child in node.children.items():
+                score = child.value() + c_puct * child.prior * total_sqrt / (1 + child.visit_count)
+                if score > best_score:
+                    best_score = score
+                    best_action = action
+                    best_child = child
+
+            node = best_child
+            search_path.append(node)
+
+        # Expand and Evaluate
+        value = value_fn(node.state)
+        if not node.is_expanded():
+            try:
+                expansions = expand_fn(node.state)
+                if expansions:
+                    # Normalize priors
+                    total_prior = sum(e[2] for e in expansions) or 1.0
+                    for action, next_state, prior in expansions:
+                        node.children[action] = PUCTNode(next_state, parent=node, action=action, prior=prior/total_prior)
+            except Exception:
+                pass # Leaf or terminal
+
+        # Backpropagate
+        for node in reversed(search_path):
+            node.visit_count += 1
+            node.value_sum += value
+            # Value for parent is usually inverse for zero-sum, but here we assume cooperative/single-player
+            # So value propagates up directly or decayed.
+
+    # Select best action
+    if not root.children:
+        return None
+
+    return max(root.children.items(), key=lambda item: item[1].visit_count)[0]
+
+def calc_entropy(predictions):
+    """Calculate entropy of a list of predictions (consistency check)."""
+    if not predictions:
+        return 0.0
+
+    # Serialize predictions to hashable types
+    counts = collections.Counter()
+    for p in predictions:
+        try:
+            if isinstance(p, list):
+                key = tuple(p)
+            elif isinstance(p, dict):
+                key = tuple(sorted(p.items()))
+            else:
+                key = p
+            counts[key] += 1
+        except Exception:
+            # Fallback for unhashable types
+            counts[str(p)] += 1
+
+    total = len(predictions)
+    entropy = 0.0
+    for count in counts.values():
+        p = count / total
+        if p > 0:
+            entropy -= p * math.log(p)
+
+    return entropy
+
+
 def evaluate_learner(
     learner: LearnerGenome,
     b: Batch,
@@ -2732,10 +2839,19 @@ def evaluate_learner(
     adapt_steps: int = 8,
     lam: float = 0.0001,
 ) -> EvalResult:
-    """PHASE B: evaluate learner with adaptation on training only."""
+    """PHASE B: evaluate learner with adaptation (Train) and TTT (Test)."""
+    # TTT Configuration (hardcoded for now or derived from Meta)
+    ttt_steps = 4
+
     env = safe_load_module(learner.code)
     if not env:
         return EvalResult(False, float("inf"), float("inf"), float("inf"), float("inf"), 0, float("inf"), "load_failed")
+
+    # Inject helpers into the environment so the genome can use them
+    env['puct_search'] = puct_search
+    env['calc_entropy'] = calc_entropy
+    env['PUCTNode'] = PUCTNode
+
     required = ["init_mem", "encode", "predict", "update", "objective"]
     if not all(name in env and callable(env[name]) for name in required):
         return EvalResult(False, float("inf"), float("inf"), float("inf"), float("inf"), 0, float("inf"), "missing_funcs")
@@ -2751,51 +2867,87 @@ def evaluate_learner(
     except Exception:
         mem = {"w": 0.0, "b": 0.0, "t": 0}
 
-    def run_eval(xs: List[Any], ys: List[Any], do_update: bool) -> float:
+    def run_eval(xs: List[Any], ys: List[Any], mode: str) -> float:
         nonlocal mem
         total = 0.0
+
+        # Test-Time Training (TTT) Phase
+        # If mode is 'test' or 'holdout', we perform unsupervised updates
+        # But we only do this ONCE per batch usually, or for each example?
+        # Here we do it per example for simplicity in TTT.
+
+        if mode in ('test', 'holdout') and ttt_steps > 0:
+             # Just try to improve mem on this specific example x using its own consistency?
+             # Or use the whole batch?
+             # Let's iterate a few times on the current example x
+             # NOTE: This assumes online TTT (per example).
+             pass
+
         for i, (x, y) in enumerate(zip(xs, ys)):
+            # TTT per example:
+            if mode in ('test', 'holdout') and ttt_steps > 0:
+                # Make a temporary copy of mem for this example?
+                # Or update global mem?
+                # Usually TTT updates weights for the specific instance or globally.
+                # Let's update globally for the session.
+                for _ in range(ttt_steps):
+                    try:
+                        z = encode(x, mem)
+                        # We need multiple predictions to measure entropy, but predict might be deterministic.
+                        # If deterministic, entropy is 0.
+                        # We assume the genome might use dropout or noise if it wants TTT.
+                        # We call update with y=None.
+                        # The genome determines if it does anything.
+                        y_pred_opt = predict(z, mem)
+                        mem = update(mem, x, y_pred_opt, None, 0.01)
+                    except Exception:
+                        pass
+
             try:
                 z = encode(x, mem)
                 y_pred = predict(z, mem)
             except Exception:
                 y_pred = None
+
             if task_name in ("sort", "reverse", "max", "filter") or task_name.startswith("arc_"):
                 total += calc_heuristic_loss(y_pred, y, task_name, x=x)
             else:
                 total += calc_error(y_pred, y)
-            if do_update and i < adapt_steps:
+
+            # Supervised Update (Train Only)
+            if mode == 'train' and i < adapt_steps:
                 try:
                     mem = update(mem, x, y_pred, y, 0.05)
                 except Exception:
                     pass
+
         return total / max(1, len(xs))
 
     try:
-        train = run_eval(b.x_tr, b.y_tr, do_update=True)
-        hold = run_eval(b.x_ho, b.y_ho, do_update=False)
-        stress = run_eval(b.x_st, b.y_st, do_update=False)
-        test = run_eval(b.x_te, b.y_te, do_update=False)
+        train = run_eval(b.x_tr, b.y_tr, mode='train')
+        hold = run_eval(b.x_ho, b.y_ho, mode='holdout')
+        stress = run_eval(b.x_st, b.y_st, mode='stress')
+        test = run_eval(b.x_te, b.y_te, mode='test')
+
         nodes = node_count(learner.code)
         ok = all(math.isfinite(v) for v in (train, hold, stress, test))
+
         if not ok:
             return EvalResult(False, train, hold, stress, test, nodes, float("inf"), "nan")
-        # Hard cutoff: stress overflows are rejected before any score aggregation.
+
         if stress > STRESS_MAX:
             return EvalResult(False, train, hold, stress, test, nodes, float("inf"), "stress_overflow")
+
         obj = objective(train, hold, stress, nodes)
         if not isinstance(obj, (int, float)) or not math.isfinite(obj):
             obj = SCORE_W_HOLD * hold + SCORE_W_STRESS * stress
+
         score = float(obj) + lam * nodes
         ok = all(math.isfinite(v) for v in (train, hold, stress, test, score))
         return EvalResult(ok, train, hold, stress, test, nodes, score, None if ok else "nan")
+
     except Exception as exc:
         return EvalResult(False, float("inf"), float("inf"), float("inf"), float("inf"), 0, float("inf"), str(exc))
-
-
-# ---------------------------
-# Mutation operators
-# ---------------------------
 
 def _pick_node(rng: random.Random, body: ast.AST) -> ast.AST:
     nodes = list(ast.walk(body))
@@ -3272,8 +3424,10 @@ def seed_learner_genome(rng: random.Random, hint: Optional[str] = None) -> Learn
 
     linear_predict = ["return mem['w'] * z + mem['b']"]
     linear_update = [
-        "mem['w'] = mem['w'] + lr * (y_true - y_pred) * z",
-        "mem['b'] = mem['b'] + lr * (y_true - y_pred)",
+        "if y_true is not None:",
+        "    diff = y_true - y_pred",
+        "    mem['w'] = mem['w'] + lr * diff * z",
+        "    mem['b'] = mem['b'] + lr * diff",
         "return mem",
     ]
 
