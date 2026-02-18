@@ -33,3 +33,12 @@ class AtomicNodeFactory:
     @staticmethod
     def create_variable(name: str) -> ast.Name:
         return ast.Name(id=name, ctx=ast.Load())
+
+    @staticmethod
+    def create_hole(hole_id: str) -> ast.Call:
+        """Creates a 'Hole' node that represents missing logic."""
+        return ast.Call(
+            func=ast.Name(id='__HOLE__', ctx=ast.Load()),
+            args=[ast.Constant(value=hole_id)],
+            keywords=[]
+        )
