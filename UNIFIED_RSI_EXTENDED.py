@@ -226,45 +226,58 @@ class InventionRepresentation:
             ]
         }
 
-    def expand(self, symbol: str) -> str:
+    def expand(self, symbol: str) -> Tuple[str, int]:
         prods = self.grammar.get(symbol, [])
-        if not prods: return ""
+        if not prods: return ("", -1)
 
         # Weighted selection
         ws = self.weights.get(symbol, {})
         weights = [ws.get(i, 1.0) for i in range(len(prods))]
 
-        choice = random.choices(prods, weights=weights, k=1)[0]
-        return choice(self)
+        idx = random.choices(range(len(prods)), weights=weights, k=1)[0]
+        choice = prods[idx]
+
+        # Recursively expand
+        res = choice(self)
+        # If the result is a tuple (from recursive expand), unpack it?
+        # But _gen_program calls expand('solver'), which returns (code, idx).
+        # We need to standardize return types.
+
+        if isinstance(res, tuple):
+            return (res[0], idx) # Return code and the index of THIS level choice
+        return (res, idx)
 
     def add_production(self, symbol: str, func: Callable):
         self.grammar.setdefault(symbol, []).append(func)
 
     def _gen_program(self, _):
         helpers = "\n".join(self.library)
-        sol = self.expand('solver')
-        return f"{helpers}\n\n{sol}" if helpers else sol
+        sol, sol_idx = self.expand('solver')
+        code = f"{helpers}\n\n{sol}" if helpers else sol
+        # We pass through the solver's strategy index if possible?
+        # But expand() wraps it. expand('program') calls _gen_program.
+        # _gen_program calls expand('solver').
+        # If expand('program') returns (code, program_idx).
+        # We want the strategy index eventually.
+        # Let's attach metadata dict?
+        return (code, sol_idx) # Hack: propagate solver index
 
     def _gen_solver(self, _):
-        body = self.expand('strategy')
-        return f"def solve(task):\n{textwrap.indent(body, '    ')}"
+        body, strat_idx = self.expand('strategy')
+        return (f"def solve(task):\n{textwrap.indent(body, '    ')}", strat_idx)
 
     # --- Strategies (Skeletons with Holes) ---
 
     def _strat_map(self, _):
-        # [HOLE(x) for x in input]
         return "return [__HOLE__(x) for x in task.input]"
 
     def _strat_filter(self, _):
-        # [x for x in input if HOLE(x)]
         return "return [x for x in task.input if __HOLE__(x)]"
 
     def _strat_reduce(self, _):
-        # sum/min/max
-        return "return sum(task.input)" # Placeholder for now
+        return "return sum(task.input)"
 
     def _strat_scan(self, _):
-        # Cumulative sum type things
         return """
 result = []
 acc = 0
@@ -273,6 +286,7 @@ for x in task.input:
     result.append(acc)
 return result
 """.strip()
+
 
 class StructureBreeder:
     """Evolves the grammar itself via Abstraction (Sleep Phase)."""
@@ -363,11 +377,61 @@ class EvolutionarySearcher:
         self.repr = repr
         self.synth = ConstraintSynthesizer()
         
-    def generate_candidate(self) -> str:
+    def generate_candidate(self) -> Tuple[str, int]:
         # 1. Generate Skeleton from Grammar
-        code = self.repr.expand('program')
-        return code
+        # expand('program') returns (code, top_level_idx).
+        # But we hacked _gen_program to return (code, solver_idx).
+        # And _gen_solver returns (code, strat_idx).
+        # So `code, meta = self.repr.expand('program')`
+        # meta will be the index chosen for 'program' production (0 usually),
+        # NOT the strategy index propagated up.
+
+        # We need a direct access to strategy generation or better metadata.
+        # Let's bypass 'program' expansion for the metadata and call 'solver' directly for logic?
+        # No, we need full code.
+
+        # Simpler approach: InventionRepresentation.expand returns (code, metadata_dict)
+        # But that requires rewriting everything.
+
+        # Workaround: Parsing the Strategy Index.
+        # Since _gen_program calls expand('solver'), which calls expand('strategy').
+        # We can just expose a method to "generate_solver_with_strategy()"
         
+        # Let's rely on the hack in _gen_program I wrote above:
+        # return (code, sol_idx) <-- this returns the tuple as the string content if not careful.
+        # My implementation of expand:
+        # res = choice(self) --> (code, inner_idx)
+        # returns (res, idx) --> ((code, inner_idx), program_idx)
+        # This nested tuple structure is messy.
+
+        # FIX:
+        # Let's change InventionRepresentation to return ONLY code string from handlers,
+        # but store the trace in `self.last_trace`? No, not thread safe.
+
+        # Better: Explicitly request strategy.
+        helpers = "\n".join(self.repr.library)
+        # Manually construct to capture index
+        solver_code, strat_idx = self.repr.expand('solver')
+        # expand returns (code, idx_of_solver_prod).
+        # wait, _gen_solver returns (code, strat_idx).
+        # expand calls _gen_solver. returns ( (code, strat_idx), solver_prod_idx )
+
+        # Okay, let's simplify InventionRepresentation.expand to JUST return (str, int)
+        # and handlers return str.
+        # But we need the strategy index which is deep in the tree.
+
+        # Re-implementation of InventionRepresentation logic in EvolutionarySearcher for clarity:
+        strat_prods = self.repr.grammar['strategy']
+        ws = self.repr.weights.get('strategy', {})
+        weights = [ws.get(i, 1.0) for i in range(len(strat_prods))]
+        strat_idx = random.choices(range(len(strat_prods)), weights=weights, k=1)[0]
+
+        body = strat_prods[strat_idx](self.repr)
+        solver_code = f"def solve(task):\n{textwrap.indent(body, '    ')}"
+
+        full_code = f"{helpers}\n\n{solver_code}" if helpers else solver_code
+        return full_code, strat_idx
+
     def refine_candidate(self, code: str, task_examples: List[Task]) -> str:
         """Fill holes using Z3."""
         try:
@@ -375,7 +439,6 @@ class EvolutionarySearcher:
         except:
             return code
             
-        # Collect I/O for synthesis
         inputs = []
         outputs = []
         for t in task_examples:
@@ -384,7 +447,6 @@ class EvolutionarySearcher:
                     inputs.extend(t.input)
                     outputs.extend(t.expected)
 
-        # Apply Synthesis Transform
         class HoleFiller(ast.NodeTransformer):
             def __init__(self, synth, ins, outs):
                 self.synth = synth
@@ -393,12 +455,9 @@ class EvolutionarySearcher:
 
             def visit_Call(self, node):
                 if isinstance(node.func, ast.Name) and node.func.id == '__HOLE__':
-                    # Found a hole!
-                    # Try to synthesize expression
                     expr = self.synth.synthesize_expression(self.ins, self.outs)
                     if expr:
                         return expr
-                    # Fallback if synthesis fails: identity
                     return ast.Name(id='x', ctx=ast.Load())
                 return self.generic_visit(node)
 
@@ -406,6 +465,7 @@ class EvolutionarySearcher:
             tree = HoleFiller(self.synth, inputs, outputs).visit(tree)
 
         return ast.unparse(tree)
+
 
 class InventionEvaluator:
     """Unrestricted Runtime."""
@@ -498,14 +558,18 @@ class InventionMetaController:
 
             best_code = None
             best_score = -1
+            best_strat_idx = -1
 
             # Population Loop
             for _ in range(10):
                 # Neural Guidance (Dream Phase applied to selection)
-                # In full version, we'd use neural_guide to bias searcher
-                
-                # Generate Skeleton
-                raw_code = self.searcher.generate_candidate()
+                # Bias searcher weights
+                vec = self.encoder.encode(tasks[0]) # Use first task as rep
+                probs = self.neural_guide.forward(vec)
+                self.repr.weights['strategy'] = {i: p for i, p in enumerate(probs)}
+
+                # Generate Skeleton with Metadata
+                raw_code, strat_idx = self.searcher.generate_candidate()
 
                 # Logic: Constraint Synthesis (Fill Holes)
                 refined_code = self.searcher.refine_candidate(raw_code, tasks)
@@ -516,27 +580,24 @@ class InventionMetaController:
                 if score > best_score:
                     best_score = score
                     best_code = refined_code
+                    best_strat_idx = strat_idx
 
-            print(f"  > Best Score: {best_score:.2f}")
+            print(f"  > Best Score: {best_score:.2f} (Strategy {best_strat_idx})")
             if best_code:
                 print(f"  > Code Snippet:\n{textwrap.indent(best_code, '    ')}")
                 if best_score == 1.0:
                     self.archive.append(best_code)
 
-                    # 2. Sleep Phase: Learning
-                    print("  > Sleep Phase: Training Neural Guide...")
-                    # Encode a task and train guide to predict 'sequence' strategy (index 0)
-                    # Simplification for demo
-                    vec = self.encoder.encode(tasks[0])
-                    self.neural_guide.train(vec, 0) # Assuming strategy 0 was used
+                    # 2. Sleep Phase: Learning (True Learning)
+                    if best_strat_idx != -1:
+                        print(f"  > Sleep Phase: Training Neural Guide on Strategy {best_strat_idx}...")
+                        vec = self.encoder.encode(tasks[0])
+                        self.neural_guide.train(vec, best_strat_idx)
 
             # 3. Structural Evolution
             if len(self.archive) > 2:
                 self.breeder.breed(self.archive)
 
-# ---------------------------
-# CLI
-# ---------------------------
 
 def cmd_selftest():
     print("Running Self-Test...")
