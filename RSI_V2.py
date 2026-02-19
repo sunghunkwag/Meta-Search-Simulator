@@ -20,7 +20,6 @@ except ImportError:
 
 from population_optimizer import PopulationOptimizer, Individual
 from grammar_evolution import GrammarEvolutionEngine, StrategyGene
-from arc_benchmark import ARCBenchmark, ARCTask
 
 @dataclass
 class Task:
@@ -302,7 +301,6 @@ class InventionMetaController:
         self.checkpoint_manager = CheckpointManager()
         self.difficulty = 1
         self.success_history = []
-        self.arc_benchmark = ARCBenchmark()
 
     def run(self, generations=10):
         print("Initializing RSI System V2...")
@@ -369,11 +367,6 @@ class InventionMetaController:
                 self.checkpoint_manager.save(self, gen, avg_success)
                 print(f"[Checkpoint] Saved generation {gen}")
                 print(self.pop_optimizer.get_summary())
-            
-            if gen > 0 and gen % 50 == 0:
-                print("\n[ARC Benchmark Evaluation]")
-                # Would need to implement ARC solver wrapper
-                print("ARC evaluation placeholder")
             
             if len(self.success_history) >= 20 and avg_success == 0.0:
                 print("[Collapse] Initiating rollback")
