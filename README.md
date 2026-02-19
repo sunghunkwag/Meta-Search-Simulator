@@ -1,5 +1,19 @@
 # Meta-Search Simulator
 
-This repository implements a simulation framework
-for studying meta-search and self-modifying algorithmic structures
-under constrained, artificial task environments.
+This is a test repository for experimental neuro-symbolic program synthesis approaches.
+
+Currently under development and validation. Not ready for production use.
+
+## Status
+
+⚠️ **Experimental** - Active testing phase
+
+## Requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+## Contact
+
+sunghunkwag@gmail.com
