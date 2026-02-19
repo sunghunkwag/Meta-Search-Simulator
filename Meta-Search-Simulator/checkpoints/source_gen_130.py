@@ -8,6 +8,7 @@ Integrates:
 3. Tesseract V2 Neuro-Evolutionary Synthesis (Creativity/Novelty) via Real Numpy Math
 4. Metacognitive Control Layer (Dynamic Routing)
 5. Performance-Based Self-Improvement (Real RSI via Hill-Climbing)
+6. Void-Logic Expansion (Non-Human-Readable Structures)
 
 Goal: Infinite Loop of Self-Improvement via Hybrid Neuro-Symbolic Architecture.
 
@@ -21,6 +22,7 @@ Changelog:
   [FIX-09] ConstraintSynthesizer: quadratic ax^2+bx+c synthesis (difficulty 2)
   [FIX-10] InventionEvaluator: configurable timeout
   [FIX-11] TesseractEngine.feedback: lr parameter exposed for RSI control
+  [PHASE-02] Void-Logic Synthesis: added synthesize_void_expression and RSI controls
 """
 
 import sys
@@ -33,6 +35,7 @@ import argparse
 import multiprocessing as mp
 import shutil
 import pickle
+import math
 import numpy as np
 from typing import List, Dict, Any, Tuple, Optional
 from dataclasses import dataclass
@@ -43,6 +46,51 @@ try:
 except ImportError:
     print("Error: numpy_tesseract.py not found. Please ensure it exists.")
     sys.exit(1)
+
+# ==============================================================================
+# UTILITY: CODE COMPLEXITY METRIC
+# ==============================================================================
+
+def code_complexity_metric(code: str) -> float:
+    """
+    Returns a scalar complexity score based on:
+      - AST depth
+      - total number of nodes
+      - number of distinct operator types
+
+    Higher = more structurally complex (harder for humans to parse).
+    """
+    try:
+        tree = ast.parse(code)
+    except:
+        return 0.0
+
+    nodes = 0
+    max_depth = 0
+    ops = set()
+
+    def visit(node, depth):
+        nonlocal nodes, max_depth, ops
+        nodes += 1
+        max_depth = max(max_depth, depth)
+
+        # Collect operator types
+        if isinstance(node, (ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Mod, ast.Pow,
+                             ast.USub, ast.UAdd, ast.BitXor, ast.BitAnd, ast.BitOr)):
+            ops.add(type(node))
+        elif isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Name):
+                ops.add(node.func.id)  # Function names as "ops"
+
+        for child in ast.iter_child_nodes(node):
+            visit(child, depth + 1)
+
+    visit(tree, 1)
+
+    # Score calculation
+    # Normalized roughly: depth(1-10), nodes(1-50), ops(1-5)
+    score = max_depth + 0.1 * nodes + 0.5 * len(ops)
+    return score
 
 # ==============================================================================
 # PART 1: METACOGNITIVE CONTROL LAYER
@@ -190,6 +238,156 @@ class ConstraintSynthesizer:
 
         return None
 
+    def synthesize_void_expression(
+        self,
+        inputs: List[float],
+        outputs: List[float]
+    ) -> Optional[ast.AST]:
+        """
+        Synthesizes 'void' expressions: non-trivial, non-linear, and
+        not obviously representable as identity/linear/quadratic/modulo.
+
+        Objectives (in this order):
+          1. Minimize prediction error on (inputs, outputs).
+          2. Maximize structural complexity (AST depth and node count).
+          3. Avoid collapsing to existing human-friendly patterns
+             (identity, linear, quadratic, modulo).
+        """
+        best_ast = None
+        best_mse = float('inf')
+        best_complexity = -1.0
+
+        # Operator pool for Void Logic
+        binary_ops = [ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Pow]
+        unary_funcs = ['sin', 'cos', 'tanh', 'exp', 'log', 'abs']
+
+        # Max attempts to find a void candidate
+        attempts = 50
+
+        for _ in range(attempts):
+            # Randomly generate an AST
+            try:
+                candidate_ast = self._generate_random_ast(depth=random.randint(2, 5))
+                # Fix locations
+                ast.fix_missing_locations(candidate_ast)
+
+                # Evaluate MSE
+                mse = self._evaluate_ast_mse(candidate_ast, inputs, outputs)
+                if mse is None: continue
+
+                # Calculate Complexity
+                complexity = 0
+                for node in ast.walk(candidate_ast):
+                    complexity += 1
+
+                # Selection Criteria
+                # 1. Low MSE (allow small float error due to transcendental functions)
+                if mse < 1e-5:
+                    # 2. Check if it's trivially reducible (simple heuristic)
+                    if self._is_trivial(candidate_ast, inputs, outputs):
+                        continue
+
+                    # 3. Maximize complexity
+                    if mse < best_mse or (abs(mse - best_mse) < 1e-9 and complexity > best_complexity):
+                        best_mse = mse
+                        best_complexity = complexity
+                        best_ast = candidate_ast
+
+            except Exception:
+                continue
+
+        return best_ast
+
+    def _generate_random_ast(self, depth):
+        if depth <= 0 or random.random() < 0.3:
+            # Leaf: variable 'x' or constant
+            if random.random() < 0.6:
+                return ast.Name(id='x', ctx=ast.Load())
+            else:
+                return ast.Constant(value=random.randint(-5, 5))
+
+        op_type = random.choice(['binary', 'unary', 'ternary'])
+
+        if op_type == 'binary':
+            op_cls = random.choice([ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Pow])
+            left = self._generate_random_ast(depth - 1)
+            right = self._generate_random_ast(depth - 1)
+            return ast.BinOp(left=left, op=op_cls(), right=right)
+
+        elif op_type == 'unary':
+            func_name = random.choice(['sin', 'cos', 'tanh', 'exp', 'log', 'abs'])
+            arg = self._generate_random_ast(depth - 1)
+            return ast.Call(
+                func=ast.Name(id=func_name, ctx=ast.Load()),
+                args=[arg], keywords=[]
+            )
+
+        elif op_type == 'ternary': # if x > c else
+             test_val = random.randint(-5, 5)
+             test = ast.Compare(
+                 left=ast.Name(id='x', ctx=ast.Load()),
+                 ops=[ast.Gt()],
+                 comparators=[ast.Constant(value=test_val)]
+             )
+             body = self._generate_random_ast(depth - 1)
+             orelse = self._generate_random_ast(depth - 1)
+             return ast.IfExp(test=test, body=body, orelse=orelse)
+
+        return ast.Name(id='x', ctx=ast.Load())
+
+    def _evaluate_ast_mse(self, tree, inputs, outputs):
+        # Wrap in lambda x: ...
+        code_obj = compile(ast.Expression(body=tree), filename="<string>", mode="eval")
+
+        mse_sum = 0
+        count = 0
+        try:
+            # Prepare safe math context
+            safe_dict = {
+                'sin': math.sin, 'cos': math.cos, 'tanh': math.tanh,
+                'exp': math.exp, 'log': lambda x: math.log(x) if x > 0 else 0,
+                'abs': abs
+            }
+
+            for x_val, y_true in zip(inputs, outputs):
+                safe_dict['x'] = x_val
+                y_pred = eval(code_obj, {"__builtins__": {}}, safe_dict)
+
+                # Check for NaN/Inf
+                if not isinstance(y_pred, (int, float)) or math.isnan(y_pred) or math.isinf(y_pred):
+                    return None
+
+                mse_sum += (y_pred - y_true) ** 2
+                count += 1
+
+            return mse_sum / count if count > 0 else float('inf')
+        except:
+            return None
+
+    def _is_trivial(self, tree, inputs, outputs):
+        # Heuristic: Check if linear regression fits perfectly
+        try:
+            # Linear check
+            x1, y1 = inputs[0], outputs[0]
+            x2, y2 = inputs[1], outputs[1]
+            if x2 != x1:
+                m = (y2 - y1) / (x2 - x1)
+                c = y1 - m * x1
+                is_linear = True
+                for x, y in zip(inputs, outputs):
+                    if abs((m * x + c) - y) > 1e-5:
+                        is_linear = False
+                        break
+                if is_linear: return True
+
+            # Identity check
+            if all(x == y for x, y in zip(inputs, outputs)):
+                return True
+
+        except:
+            pass
+        return False
+
 # ==============================================================================
 # PART 3: RSI CORE (Grammar & Evolution)
 # ==============================================================================
@@ -236,7 +434,7 @@ class EvolutionarySearcher:
         code = f"def solve(task):\n{textwrap.indent(body, '    ')}"
         return code, strat_idx
 
-    def refine_candidate(self, code: str, task_examples: List[Task]) -> str:
+    def refine_candidate(self, code: str, task_examples: List[Task], use_void: bool = False) -> str:
         try:
             tree = ast.parse(code)
         except:
@@ -249,21 +447,26 @@ class EvolutionarySearcher:
                 outputs.extend(t.expected)
 
         class HoleFiller(ast.NodeTransformer):
-            def __init__(self, synth, ins, outs):
+            def __init__(self, synth, ins, outs, use_void: bool = False):
                 self.synth = synth
                 self.ins = ins
                 self.outs = outs
+                self.use_void = use_void
 
             def visit_Call(self, node):
                 if isinstance(node.func, ast.Name) and node.func.id == '__HOLE__':
-                    expr = self.synth.synthesize_expression(self.ins, self.outs)
+                    if self.use_void:
+                        expr = self.synth.synthesize_void_expression(self.ins, self.outs)
+                    else:
+                        expr = self.synth.synthesize_expression(self.ins, self.outs)
+
                     if expr:
                         return expr
                     return ast.Name(id='x', ctx=ast.Load())
                 return self.generic_visit(node)
 
         if inputs:
-            tree = HoleFiller(self.synth, inputs, outputs).visit(tree)
+            tree = HoleFiller(self.synth, inputs, outputs, use_void=use_void).visit(tree)
 
         return ast.unparse(tree)
 
@@ -294,6 +497,14 @@ class InventionEvaluator:
     def _exec_worker(code, task, q):
         try:
             scope = {}
+            # Inject math imports for Void Logic
+            import math
+            scope['sin'] = math.sin
+            scope['cos'] = math.cos
+            scope['tanh'] = math.tanh
+            scope['exp'] = math.exp
+            scope['log'] = math.log
+
             exec(code, scope)
             if 'solve' in scope:
                 res = scope['solve'](task)
@@ -319,6 +530,7 @@ class PerformanceSelfImprover:
       - task_timeout:          Subprocess execution timeout in seconds
       - feedback_lr:           TesseractEngine operator learning rate
       - curriculum_threshold:  avg_success required to increase difficulty [FIX-08]
+      - void_preference:       Probability to use Void-Logic synthesis [PHASE-02]
 
     [FIX-08] Replaces SelfImprover (random AST constant mutation) with
     performance-guided parameter optimization. curriculum_threshold default
@@ -330,6 +542,7 @@ class PerformanceSelfImprover:
         'task_timeout':         (0.1,  2.0,  0.05),
         'feedback_lr':          (0.01, 0.3,  0.01),
         'curriculum_threshold': (0.5,  0.95, 0.05),
+        'void_preference':      (0.0,  1.0,  0.05), # [PHASE-02]
     }
 
     def __init__(self):
@@ -338,12 +551,13 @@ class PerformanceSelfImprover:
             'task_timeout':         0.2,
             'feedback_lr':          0.05,
             'curriculum_threshold': 0.75,  # [FIX-08] was 0.9 -> now 0.75
+            'void_preference':      0.0,   # [PHASE-02] default 0%
         }
         self._pending_change = None    # (param_name, old_val, new_val)
         self._pre_change_perf = None   # avg_success snapshot before change
         self.improvement_log: List[Dict] = []  # Full audit trail
 
-    def step(self, avg_success: float) -> Tuple[Optional[str], Optional[str]]:
+    def step(self, avg_success: float, avg_complexity: float = 0.0) -> Tuple[Optional[str], Optional[str]]:
         """
         Called every N generations.
         Phase 1: Evaluate pending change (keep or revert).
@@ -376,15 +590,20 @@ class PerformanceSelfImprover:
             self._pending_change = None
             self._pre_change_perf = None
 
-        # Phase 2: Propose new change, guided by current performance level
+        # Phase 2: Propose new change, guided by current performance AND complexity
         # Low performance: focus on search capacity
         # High performance: fine-tune learning dynamics and curriculum
+        # High performance but Low Complexity: increase Void Preference
+
+        priority = list(self.PARAM_BOUNDS.keys())
+
         if avg_success < 0.4:
             priority = ['num_candidates', 'task_timeout']
+        elif avg_success > 0.8 and avg_complexity < 5.0:
+            # Success is high, but code is too simple (human-like). Push Void.
+            priority = ['void_preference']
         elif avg_success < 0.7:
-            priority = ['num_candidates', 'feedback_lr', 'curriculum_threshold']
-        else:
-            priority = list(self.PARAM_BOUNDS.keys())
+             priority = ['num_candidates', 'feedback_lr', 'curriculum_threshold']
 
         name = random.choice(priority)
         lo, hi, step_size = self.PARAM_BOUNDS[name]
@@ -399,7 +618,7 @@ class PerformanceSelfImprover:
             self._pending_change = (name, current, new_val)
             self._pre_change_perf = avg_success
             self.params[name] = new_val
-            proposal_msg = f"[RSI-PROP] PROPOSE {name:<22} {current} -> {new_val}  (perf={avg_success:.3f})"
+            proposal_msg = f"[RSI-PROP] PROPOSE {name:<22} {current} -> {new_val}  (perf={avg_success:.3f}, cmplx={avg_complexity:.1f})"
         else:
             proposal_msg = f"[RSI-PROP] {name} at boundary ({current}), skipping"
 
@@ -440,7 +659,8 @@ class CheckpointManager:
             "rsi_params": controller.rsi.params,
             "rsi_log": controller.rsi.improvement_log,
             "generation": generation,
-            "score": score
+            "score": score,
+            "complexity_history": controller.complexity_history # [PHASE-02]
         }
         try:
             with open(filename, "wb") as f:
@@ -544,6 +764,7 @@ class InventionMetaController:
         self.checkpoint_manager = CheckpointManager()
         self.difficulty = 1
         self.success_history = []
+        self.complexity_history = [] # [PHASE-02]
 
     def run(self, generations=10):
         print(f"Initializing Hybrid Neuro-Symbolic RSI Engine (Real Math)...")
@@ -575,15 +796,22 @@ class InventionMetaController:
             best_score = -1
             best_code = None  # [FIX-01]
 
+            # [PHASE-02] Determine Void Preference
+            void_pref = float(self.rsi.get('void_preference', 0.0))
+
             for _ in range(num_candidates):
                 raw, idx = self.searcher.generate_candidate()
-                refined = self.searcher.refine_candidate(raw, tasks)
+
+                # [PHASE-02] Probabilistic Void Synthesis
+                use_void = random.random() < void_pref
+
+                refined = self.searcher.refine_candidate(raw, tasks, use_void=use_void)
                 score = self.evaluator.evaluate(refined, tasks)
                 if score > best_score:
                     best_score = score
                     best_code = refined  # [FIX-01]
 
-            print(f"  > Solved: {best_score * 100:.0f}%  (candidates: {num_candidates})")
+            print(f"  > Solved: {best_score * 100:.0f}%  (candidates: {num_candidates}, void_pref: {void_pref:.2f})")
 
             # [FIX-01] Populate archive
             if best_score >= 1.0 and best_code is not None:
@@ -593,7 +821,13 @@ class InventionMetaController:
                     'score': best_score,
                     'difficulty': self.difficulty,
                 })
-                print(f"  > [ARCHIVE] Solution stored. Total archived: {len(self.archive)}")
+                # [PHASE-02] Metric tracking
+                code_complexity = code_complexity_metric(best_code)
+                self.complexity_history.append(code_complexity)
+                if len(self.complexity_history) > 20:
+                     self.complexity_history.pop(0)
+
+                print(f"  > [ARCHIVE] Solution stored. Total archived: {len(self.archive)} (Complexity: {code_complexity:.2f})")
 
             # Feedback to TesseractEngine with adaptive lr [FIX-11]
             reward = 1.0 if best_score == 1.0 else -1.0
@@ -623,8 +857,10 @@ class InventionMetaController:
                 print(f"  >>> [AUTO-CURRICULUM] Decreasing Difficulty to {self.difficulty}")
 
             # [FIX-08] RSI step: hill-climbing over hyperparameters every 5 gens
+            # [PHASE-02] Pass complexity
             if gen > 0 and gen % 5 == 0:
-                eval_msg, proposal_msg = self.rsi.step(avg_success)
+                avg_complexity = sum(self.complexity_history) / len(self.complexity_history) if self.complexity_history else 0.0
+                eval_msg, proposal_msg = self.rsi.step(avg_success, avg_complexity)
                 if eval_msg:
                     print(f"  {eval_msg}")
                 if proposal_msg:
@@ -648,6 +884,7 @@ class InventionMetaController:
                         self.difficulty = state['difficulty']
                         self.rsi.params = state.get('rsi_params', self.rsi.params)
                         self.success_history = []
+                        self.complexity_history = state.get('complexity_history', []) # [PHASE-02]
                         print("  !!! [ROLLBACK] State Restored.")
 
             gen += 1
@@ -695,7 +932,7 @@ def main():
     if args.cmd == 'selftest':
         cmd_selftest()
     elif args.cmd == 'evolve':
-        InventionMetaController().run(generations=500)
+        InventionMetaController().run(generations=0)
     elif args.cmd == 'resilience-test':
         cmd_resilience_test()
     else:
