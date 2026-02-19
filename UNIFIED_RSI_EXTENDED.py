@@ -9,6 +9,12 @@ Integrates:
 4. Metacognitive Control Layer (Dynamic Routing)
 
 Goal: Infinite Loop of Self-Improvement via Hybrid Neuro-Symbolic Architecture.
+
+Changelog:
+  [FIX-01] archive now populated with successful solutions in run()
+  [FIX-02] SelfImprover: backup first, validate syntax before overwrite, restore on error
+  [FIX-03] ConstraintSynthesizer: modulo synthesis added (difficulty >= 3 support)
+  [FIX-04] ConstraintSynthesizer: identity check now precedes linear (dead-code fixed)
 """
 
 import sys
@@ -49,14 +55,10 @@ class MetacognitiveController:
         Heuristic for task complexity (0.0 to 1.0).
         """
         score = 0.1
-        # Input Size heuristic
         if hasattr(task.input, '__len__'):
             score += min(len(task.input) / 20.0, 0.4)
-
-        # Type complexity
         if task.kind == 'transform':
             score += 0.3
-
         return min(score, 1.0)
 
     def route_reasoning(self, complexity: float) -> Dict[str, float]:
@@ -71,15 +73,21 @@ class MetacognitiveController:
         }
 
 # ==============================================================================
-# PART 2: SYMBOLIC REASONING (Z3 Logic)
+# PART 2: SYMBOLIC REASONING (Constraint Synthesis)
 # ==============================================================================
 
 class ConstraintSynthesizer:
     def synthesize_expression(self, inputs: List[int], outputs: List[int]) -> Optional[ast.AST]:
         """
         Uses mathematical derivation to find f(x).
+        Supports: identity, linear (ax+b), square (x^2), modulo ((a*x)%m).
         """
-        if not inputs or not outputs: return None
+        if not inputs or not outputs:
+            return None
+
+        # [FIX-04] Check Identity FIRST — was previously unreachable due to linear catching a=1,b=0
+        if inputs == outputs:
+            return ast.Name(id='x', ctx=ast.Load())
 
         # 1. Try Linear: y = ax + b
         try:
@@ -88,23 +96,46 @@ class ConstraintSynthesizer:
             if x2 - x1 != 0:
                 a = (y2 - y1) // (x2 - x1)
                 b = y1 - a * x1
-                if all(a*x + b == y for x, y in zip(inputs, outputs)):
+                if all(a * x + b == y for x, y in zip(inputs, outputs)):
                     return ast.BinOp(
-                        left=ast.BinOp(left=ast.Constant(value=a), op=ast.Mult(), right=ast.Name(id='x', ctx=ast.Load())),
+                        left=ast.BinOp(
+                            left=ast.Constant(value=a),
+                            op=ast.Mult(),
+                            right=ast.Name(id='x', ctx=ast.Load())
+                        ),
                         op=ast.Add(),
                         right=ast.Constant(value=b)
                     )
-        except: pass
+        except:
+            pass
 
-        # 2. Try Identity
-        if inputs == outputs:
-             return ast.Name(id='x', ctx=ast.Load())
-
-        # 3. Try Square
+        # 2. Try Square: y = x^2
         try:
-            if all(x**2 == y for x, y in zip(inputs, outputs)):
-                return ast.BinOp(left=ast.Name(id='x', ctx=ast.Load()), op=ast.Pow(), right=ast.Constant(value=2))
-        except: pass
+            if all(x ** 2 == y for x, y in zip(inputs, outputs)):
+                return ast.BinOp(
+                    left=ast.Name(id='x', ctx=ast.Load()),
+                    op=ast.Pow(),
+                    right=ast.Constant(value=2)
+                )
+        except:
+            pass
+
+        # [FIX-03] Try Modulo: y = (a*x) % m  — required for difficulty >= 3
+        try:
+            for a in range(1, 11):
+                for m in range(2, 21):
+                    if all((x * a) % m == y for x, y in zip(inputs, outputs)):
+                        return ast.BinOp(
+                            left=ast.BinOp(
+                                left=ast.Constant(value=a),
+                                op=ast.Mult(),
+                                right=ast.Name(id='x', ctx=ast.Load())
+                            ),
+                            op=ast.Mod(),
+                            right=ast.Constant(value=m)
+                        )
+        except:
+            pass
 
         return None
 
@@ -141,12 +172,14 @@ class EvolutionarySearcher:
         ws = self.repr.weights.get('strategy', {})
         weights = [ws.get(i, 1.0) for i in range(len(strat_prods))]
 
-        # Normalize
         s = sum(weights)
-        if s > 0: weights = [w/s for w in weights]
-        else: weights = [1.0] * len(strat_prods)
+        if s > 0:
+            weights = [w / s for w in weights]
+        else:
+            weights = [1.0] * len(strat_prods)
 
-        strat_idx = np.random.choice(range(len(strat_prods)), p=weights/np.sum(weights))
+        w_arr = np.array(weights)
+        strat_idx = np.random.choice(range(len(strat_prods)), p=w_arr / np.sum(w_arr))
         body = strat_prods[strat_idx](self.repr)
 
         code = f"def solve(task):\n{textwrap.indent(body, '    ')}"
@@ -155,7 +188,8 @@ class EvolutionarySearcher:
     def refine_candidate(self, code: str, task_examples: List[Task]) -> str:
         try:
             tree = ast.parse(code)
-        except: return code
+        except:
+            return code
 
         inputs, outputs = [], []
         for t in task_examples:
@@ -168,10 +202,12 @@ class EvolutionarySearcher:
                 self.synth = synth
                 self.ins = ins
                 self.outs = outs
+
             def visit_Call(self, node):
                 if isinstance(node.func, ast.Name) and node.func.id == '__HOLE__':
                     expr = self.synth.synthesize_expression(self.ins, self.outs)
-                    if expr: return expr
+                    if expr:
+                        return expr
                     return ast.Name(id='x', ctx=ast.Load())
                 return self.generic_visit(node)
 
@@ -207,7 +243,8 @@ class InventionEvaluator:
             if 'solve' in scope:
                 res = scope['solve'](task)
                 q.put(res)
-        except: pass
+        except:
+            pass
 
 # ==============================================================================
 # PART 4: HYBRID CONTROLLER (The Infinite Loop)
@@ -248,32 +285,50 @@ class CheckpointManager:
             print(f"[Checkpoint] Error saving: {e}")
 
     def load_best(self):
-        if not self.history: return None
+        if not self.history:
+            return None
         best = sorted(self.history, key=lambda x: x['score'], reverse=True)[0]
         try:
             with open(best['file'], "rb") as f:
                 return pickle.load(f)
-        except: return None
+        except:
+            return None
 
     def rollback_source(self):
-        if not self.history: return False
+        if not self.history:
+            return False
         best = sorted(self.history, key=lambda x: x['score'], reverse=True)[0]
         try:
             shutil.copy(best['src'], __file__)
             print(f"[Rollback] Restored source code from generation {best['gen']}")
             return True
-        except: return False
+        except:
+            return False
 
 class SelfImprover:
     def attempt_improvement(self, current_score):
         """
         Reads source code, attempts to optimize constants or logic.
+
+        [FIX-02] Safety improvements:
+          1. Creates .bak backup BEFORE any mutation.
+          2. Validates mutated code with ast.parse() before overwriting.
+          3. On any exception mid-write, restores from backup automatically.
+
+        Note: ast.unparse() strips inline comments and docstrings — this is a
+        known limitation of AST-level mutation. The .bak file always preserves
+        the original commented version.
         """
+        backup_path = __file__ + ".bak"
         try:
             with open(__file__, "r") as f:
-                code = f.read()
+                original_code = f.read()
 
-            tree = ast.parse(code)
+            # [FIX-02] Step 1: Save backup BEFORE any modification
+            with open(backup_path, "w") as f:
+                f.write(original_code)
+
+            tree = ast.parse(original_code)
 
             class ConstantMutator(ast.NodeTransformer):
                 def visit_Constant(self, node):
@@ -288,14 +343,34 @@ class SelfImprover:
             new_tree = ConstantMutator().visit(tree)
             new_code = ast.unparse(new_tree)
 
-            if new_code != code:
+            # [FIX-02] Step 2: Validate mutated code is syntactically sound
+            try:
+                ast.parse(new_code)
+            except SyntaxError as e:
+                print(f"[Self-Improvement] Mutation produced invalid syntax: {e}. Aborted.")
+                return False
+
+            # Only write if something actually changed
+            if new_code != ast.unparse(ast.parse(original_code)):
                 with open(__file__, "w") as f:
                     f.write(new_code)
-                print("[Self-Improvement] Mutated source code (Optimization attempt).")
+                print(f"[Self-Improvement] Source mutated. Backup preserved at: {backup_path}")
                 return True
+
             return False
+
         except Exception as e:
             print(f"[Self-Improvement] Failed: {e}")
+            # [FIX-02] Step 3: Restore from backup if mid-write error occurred
+            if os.path.exists(backup_path):
+                try:
+                    with open(backup_path, "r") as f:
+                        restored = f.read()
+                    with open(__file__, "w") as f:
+                        f.write(restored)
+                    print("[Self-Improvement] Restored original from backup after error.")
+                except Exception as restore_err:
+                    print(f"[Self-Improvement] CRITICAL: Backup restore also failed: {restore_err}")
             return False
 
 class ProblemGenerator:
@@ -314,11 +389,11 @@ class ProblemGenerator:
 
         for _ in range(n):
             if difficulty == 1:
-                # Level 1: Linear Sequence or Sort
                 if np.random.rand() < 0.8:
                     m = bias_m
                     c = bias_c
-                    if np.random.rand() < 0.5: m += np.random.randint(-1, 2)
+                    if np.random.rand() < 0.5:
+                        m += np.random.randint(-1, 2)
                     inp = [np.random.randint(0, 10) for _ in range(5)]
                     out = [x * m + c for x in inp]
                     tasks.append(Task(kind='sequence', input=inp, expected=out, hint=f"linear_{m}x+{c}"))
@@ -328,17 +403,14 @@ class ProblemGenerator:
                     tasks.append(Task(kind='transform', input=inp, expected=out, hint="sort"))
 
             elif difficulty == 2:
-                # Level 2: Quadratic or more complex linear
                 m = bias_m
                 c = bias_c
                 inp = [np.random.randint(0, 10) for _ in range(5)]
-                # ax^2 + bx + c
                 a = np.random.randint(1, 3)
-                out = [a * x**2 + m * x + c for x in inp]
+                out = [a * x ** 2 + m * x + c for x in inp]
                 tasks.append(Task(kind='sequence', input=inp, expected=out, hint=f"quad_{a}x^2+{m}x+{c}"))
 
             elif difficulty >= 3:
-                # Level 3: Modulo Arithmetic or larger inputs
                 m = max(2, bias_m)
                 mod = max(2, bias_c + 3)
                 inp = [np.random.randint(0, 20) for _ in range(5)]
@@ -355,9 +427,9 @@ class InventionMetaController:
         self.prob_gen = ProblemGenerator()
         self.metacognition = MetacognitiveController()
         self.tesseract = numpy_tesseract.TesseractEngine(z_dim=32)
-        self.archive = []
+        self.archive = []  # [FIX-01] Populated in run() when best_score >= 1.0
 
-        # New RSI Components
+        # RSI Components
         self.checkpoint_manager = CheckpointManager()
         self.self_improver = SelfImprover()
         self.difficulty = 1
@@ -370,18 +442,15 @@ class InventionMetaController:
 
         gen = 0
         while True:
-            # Infinite Loop
-
             current_op = operators[gen % len(operators)]
             concept_vec = self.tesseract.decode_concept(current_op)
 
-            # Generate with Current Difficulty
             tasks = self.prob_gen.generate(3, concept_vector=concept_vec, difficulty=self.difficulty)
 
             complexity = self.metacognition.assess_complexity(tasks[0])
             routing = self.metacognition.route_reasoning(complexity)
 
-            print(f"\\n[Gen {gen}] Diff: {self.difficulty} | Complexity: {complexity:.2f} | Routing: {routing}")
+            print(f"\n[Gen {gen}] Diff: {self.difficulty} | Complexity: {complexity:.2f} | Routing: {routing}")
 
             base_weights = {0: 1.0, 1: 1.0}
             if routing['symbolic'] > 0.6:
@@ -392,6 +461,7 @@ class InventionMetaController:
             self.repr.weights['strategy'] = base_weights
 
             best_score = -1
+            best_code = None  # [FIX-01] Track the code that achieved best_score
 
             for _ in range(10):
                 raw, idx = self.searcher.generate_candidate()
@@ -399,10 +469,21 @@ class InventionMetaController:
                 score = self.evaluator.evaluate(refined, tasks)
                 if score > best_score:
                     best_score = score
+                    best_code = refined  # [FIX-01] Store winning code
 
-            print(f"  > Solved: {best_score*100:.0f}%")
+            print(f"  > Solved: {best_score * 100:.0f}%")
 
-            # Feedback
+            # [FIX-01] Populate archive with fully successful solutions
+            if best_score >= 1.0 and best_code is not None:
+                self.archive.append({
+                    'gen': gen,
+                    'code': best_code,
+                    'score': best_score,
+                    'difficulty': self.difficulty,
+                })
+                print(f"  > [ARCHIVE] Solution stored. Total archived: {len(self.archive)}")
+
+            # Feedback to TesseractEngine
             reward = 1.0 if best_score == 1.0 else -1.0
             self.tesseract.feedback(current_op, reward)
             if reward > 0:
@@ -419,7 +500,7 @@ class InventionMetaController:
 
             if avg_success > 0.9 and len(self.success_history) >= 10:
                 self.difficulty += 1
-                self.success_history = [] # Reset history on level up
+                self.success_history = []
                 print(f"  >>> [AUTO-CURRICULUM] Increasing Difficulty to {self.difficulty}")
 
             elif avg_success < 0.2 and self.difficulty > 1 and len(self.success_history) >= 10:
@@ -431,10 +512,8 @@ class InventionMetaController:
             if gen > 0 and gen % 10 == 0:
                 self.checkpoint_manager.save(self, gen, avg_success)
 
-                # Attempt Self-Rewrite
                 if self.self_improver.attempt_improvement(avg_success):
                     print("  >>> [RSI] Source Code Mutated. Reloading Architecture...")
-                    # In a real system, we would restart. Here we just notify.
                     pass
 
             # Collapse Management
@@ -450,7 +529,7 @@ class InventionMetaController:
 
             gen += 1
             if generations > 0 and gen >= generations:
-                 break
+                break
 
 def cmd_selftest():
     print("Running Self-Test...")
@@ -463,7 +542,7 @@ def cmd_resilience_test():
     controller = InventionMetaController()
 
     def poison_strategy(_):
-        return "while True:\\n    pass"
+        return "while True:\n    pass"
 
     def valid_strategy(_):
         return "return [__HOLE__(x) for x in task.input]"
@@ -476,8 +555,11 @@ def cmd_resilience_test():
     controller.run(generations=5)
     duration = time.time() - start
 
-    print(f"\\n[Resilience] Duration: {duration:.2f}s")
-    print("[PASS] System survived infinite loops (even if not solved in short run).")
+    # [FIX-01] archive is now actually populated — this check is meaningful
+    solved = len(controller.archive) > 0
+    print(f"\n[Resilience] Duration: {duration:.2f}s")
+    print(f"[Resilience] Solved (archive non-empty): {solved}")
+    print("[PASS] System survived infinite loops.")
 
 def main():
     parser = argparse.ArgumentParser()

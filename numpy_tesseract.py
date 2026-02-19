@@ -32,13 +32,13 @@ class NumpyAutoencoder:
         self.z1 = np.dot(X, self.W1) + self.b1
         self.a1 = self.relu(self.z1)
         self.z2 = np.dot(self.a1, self.W2) + self.b2
-        self.latent = self.z2 # Linear activation for latent space
+        self.latent = self.z2  # Linear activation for latent space
 
         # Decoder
         self.z3 = np.dot(self.latent, self.W3) + self.b3
         self.a3 = self.relu(self.z3)
         self.z4 = np.dot(self.a3, self.W4) + self.b4
-        self.reconstruction = self.z4 # Linear output
+        self.reconstruction = self.z4  # Linear output
 
         return self.reconstruction, self.latent
 
@@ -49,7 +49,7 @@ class NumpyAutoencoder:
         grad_output = 2 * (X_hat - X) / m
 
         # Decoder Backprop
-        d_z4 = grad_output # Linear activation derivative is 1
+        d_z4 = grad_output
         d_W4 = np.dot(self.a3.T, d_z4)
         d_b4 = np.sum(d_z4, axis=0, keepdims=True)
 
@@ -60,7 +60,7 @@ class NumpyAutoencoder:
 
         # Encoder Backprop
         d_latent = np.dot(d_z3, self.W3.T)
-        d_z2 = d_latent # Linear activation
+        d_z2 = d_latent  # Linear activation
         d_W2 = np.dot(self.a1.T, d_z2)
         d_b2 = np.sum(d_z2, axis=0, keepdims=True)
 
@@ -94,14 +94,11 @@ class NumpyGMM:
 
     def fit(self, X):
         n_samples, n_features = X.shape
-        # Simple K-Means initialization
         indices = np.random.choice(n_samples, self.n_components, replace=False)
         self.means = X[indices]
         self.covariances = np.array([np.eye(n_features) for _ in range(self.n_components)])
         self.weights = np.ones(self.n_components) / self.n_components
 
-        # Simplified EM-like update (One iteration for stability/speed in this context)
-        # Assign points to nearest cluster
         distances = np.linalg.norm(X[:, np.newaxis] - self.means, axis=2)
         labels = np.argmin(distances, axis=1)
 
@@ -109,11 +106,9 @@ class NumpyGMM:
             cluster_points = X[labels == k]
             if len(cluster_points) > 1:
                 self.means[k] = np.mean(cluster_points, axis=0)
-                # Diagonal covariance for simplicity
                 self.covariances[k] = np.diag(np.var(cluster_points, axis=0) + 1e-6)
                 self.weights[k] = len(cluster_points) / n_samples
             else:
-                # Re-initialize empty cluster
                 self.means[k] = X[np.random.randint(n_samples)]
                 self.covariances[k] = np.eye(n_features)
 
@@ -124,7 +119,6 @@ class NumpyGMM:
 
         for k in range(self.n_components):
             diff = X - self.means[k]
-            # Mahalanobis distance term (simplified diagonal covariance)
             inv_cov = np.linalg.inv(self.covariances[k])
             mahalanobis = np.sum(np.dot(diff, inv_cov) * diff, axis=1)
             det_cov = np.linalg.det(self.covariances[k])
@@ -139,11 +133,17 @@ class NumpyOperator:
     """
     Evolvable transformation matrix in latent space.
     f(z) = tanh(Wz + b)
+
+    Augmented with best_W / best_b for ES-style reinforcement (see feedback()).
     """
     def __init__(self, latent_dim):
         self.latent_dim = latent_dim
         self.W = np.random.randn(latent_dim, latent_dim) * 0.1
         self.b = np.zeros(latent_dim)
+        # [FIX-06] Reinforcement memory: track best known configuration
+        self.best_W = self.W.copy()
+        self.best_b = self.b.copy()
+        self.best_reward = -np.inf
 
     def forward(self, z):
         return np.tanh(np.dot(z, self.W) + self.b)
@@ -152,6 +152,10 @@ class NumpyOperator:
         child = NumpyOperator(self.latent_dim)
         child.W = self.W + np.random.randn(*self.W.shape) * sigma
         child.b = self.b + np.random.randn(*self.b.shape) * sigma
+        # Inherit best known state from parent
+        child.best_W = self.best_W.copy()
+        child.best_b = self.best_b.copy()
+        child.best_reward = self.best_reward
         return child
 
 class TesseractEngine:
@@ -159,17 +163,11 @@ class TesseractEngine:
         self.z_dim = z_dim
         self.vocab_size = vocab_size
 
-        # 1. Initialize "Human Semantic Space" with random vectors (Simulation of Embeddings)
-        # In a real scenario, these would be loaded from a file or computed via a model.
-        # We use a fixed seed for consistency.
         np.random.seed(42)
-        self.human_embeddings = np.random.randn(vocab_size, 64) # 64-dim embeddings
+        self.human_embeddings = np.random.randn(vocab_size, 64)
         self.human_embeddings /= np.linalg.norm(self.human_embeddings, axis=1, keepdims=True)
 
-        # 2. Autoencoder
         self.ae = NumpyAutoencoder(input_dim=64, hidden_dim=48, latent_dim=z_dim)
-
-        # 3. GMM
         self.gmm = NumpyGMM(n_components=5)
 
         self.train_autoencoder()
@@ -177,46 +175,40 @@ class TesseractEngine:
 
     def train_autoencoder(self, epochs=50):
         for _ in range(epochs):
-            # Simple batch training
             idx = np.random.permutation(self.vocab_size)
             for i in range(0, self.vocab_size, 32):
-                batch = self.human_embeddings[idx[i:i+32]]
+                batch = self.human_embeddings[idx[i:i + 32]]
                 recons, latent = self.ae.forward(batch)
-                self.ae.backward(batch, recons) # Backprop updates weights inplace
+                self.ae.backward(batch, recons)
 
     def fit_density(self):
         _, latent = self.ae.forward(self.human_embeddings)
         self.gmm.fit(latent)
 
     def evolve_concepts(self, n_generations=10, population_size=20) -> list:
-        # Evolution of Operators to find Novelty (High NLL)
+        """Evolution of Operators to find Novelty (High NLL).
+
+        [FIX-05] elites is now initialized before the loop to prevent
+        NameError when n_generations=0.
+        """
         population = [NumpyOperator(self.z_dim) for _ in range(population_size)]
+        elites = population[:5]  # [FIX-05] Safe default: first 5 random operators
 
         for gen in range(n_generations):
             scores = []
             for op in population:
-                # Generate latent points
                 z_seed = np.random.randn(10, self.z_dim)
                 z_new = op.forward(z_seed)
 
-                # Score: Novelty (High NLL) + Consistency (Reconstruction)
-                # NLL is negative log likelihood. We want to minimize likelihood -> maximize -logL
-                # GMM score_samples returns log_likelihood.
                 log_prob = self.gmm.score_samples(z_new)
                 novelty = -np.mean(log_prob)
-
-                # Consistency (Latent -> Output -> Latent)
-                # We skip full consistency check for speed, just check norm
-                norm_penalty = np.mean(z_new**2)
-
+                norm_penalty = np.mean(z_new ** 2)
                 fitness = novelty - 0.1 * norm_penalty
                 scores.append((fitness, op))
 
-            # Selection
             scores.sort(key=lambda x: x[0], reverse=True)
             elites = [op for _, op in scores[:5]]
 
-            # Reproduction
             new_pop = list(elites)
             while len(new_pop) < population_size:
                 parent = np.random.choice(elites)
@@ -224,7 +216,6 @@ class TesseractEngine:
                 new_pop.append(child)
             population = new_pop
 
-        # Return best operators
         return elites
 
     def decode_concept(self, operator, n_samples=1):
@@ -237,19 +228,37 @@ class TesseractEngine:
 
     def feedback(self, operator, reward):
         """
-        Reinforcement Learning Update for the Operator.
-        If reward is positive, we reinforce the weights.
-        If negative, we add noise (explore).
+        ES-style reinforcement update for a NumpyOperator.
 
-        Simple Gradient-Free Update (ES-like).
+        [FIX-06] Previous implementation was a no-op on success and applied
+        random noise subtraction on failure — neither had any learning effect.
+
+        New behavior:
+          reward > 0 (success):
+            - Store current weights as best_W / best_b if this is the best reward seen.
+            - Apply mild consolidation toward best known state (EMA blend).
+          reward <= 0 (failure):
+            - Perturb weights with Gaussian noise to explore.
+            - Partially revert toward best known state to avoid drifting too far.
         """
-        lr = 0.01
-        noise = np.random.randn(*operator.W.shape)
+        lr = 0.05
+
         if reward > 0:
-            # "Solidify" the weights (reduce magnitude of random drift? No, that's not right)
-            # We assume the current state is good.
-            pass
+            # Update best known configuration if this reward is better
+            if reward >= operator.best_reward:
+                operator.best_W = operator.W.copy()
+                operator.best_b = operator.b.copy()
+                operator.best_reward = reward
+
+            # Mild consolidation: blend current weights toward best (EMA)
+            operator.W = operator.W * 0.98 + operator.best_W * 0.02
+            operator.b = operator.b * 0.98 + operator.best_b * 0.02
+
         else:
-            # Punish: Move away from this configuration?
-            # Or just mutate more aggressively.
-            operator.W += noise * lr * -1.0
+            # Explore: perturb current weights with Gaussian noise
+            operator.W += np.random.randn(*operator.W.shape) * lr
+            operator.b += np.random.randn(*operator.b.shape) * lr
+
+            # Partial revert toward best to prevent unbounded drift
+            operator.W = operator.W * 0.7 + operator.best_W * 0.3
+            operator.b = operator.b * 0.7 + operator.best_b * 0.3
