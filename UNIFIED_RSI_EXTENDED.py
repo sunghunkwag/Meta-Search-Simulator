@@ -19,6 +19,8 @@ import time
 import textwrap
 import argparse
 import multiprocessing as mp
+import shutil
+import pickle
 import numpy as np
 from typing import List, Dict, Any, Tuple, Optional
 from dataclasses import dataclass
@@ -211,38 +213,138 @@ class InventionEvaluator:
 # PART 4: HYBRID CONTROLLER (The Infinite Loop)
 # ==============================================================================
 
-class ProblemGenerator:
-    def generate(self, n=5, concept_vector: Optional[np.ndarray] = None) -> List[Task]:
+class CheckpointManager:
+    def __init__(self, checkpoint_dir="checkpoints"):
+        self.checkpoint_dir = checkpoint_dir
+        if not os.path.exists(checkpoint_dir):
+            os.makedirs(checkpoint_dir)
+        self.history = []
+
+    def save(self, controller, generation, score):
+        filename = os.path.join(self.checkpoint_dir, f"checkpoint_gen_{generation}.pkl")
+        state = {
+            "weights": controller.repr.weights,
+            "grammar": controller.repr.grammar,
+            "difficulty": controller.difficulty,
+            "success_history": controller.success_history,
+            "generation": generation,
+            "score": score
+        }
+        try:
+            with open(filename, "wb") as f:
+                pickle.dump(state, f)
+
+            src_backup = os.path.join(self.checkpoint_dir, f"source_gen_{generation}.py")
+            shutil.copy(__file__, src_backup)
+
+            self.history.append({'gen': generation, 'score': score, 'file': filename, 'src': src_backup})
+            if len(self.history) > 5:
+                oldest = self.history.pop(0)
+                if os.path.exists(oldest['file']):
+                    os.remove(oldest['file'])
+                if os.path.exists(oldest['src']):
+                    os.remove(oldest['src'])
+        except Exception as e:
+            print(f"[Checkpoint] Error saving: {e}")
+
+    def load_best(self):
+        if not self.history: return None
+        best = sorted(self.history, key=lambda x: x['score'], reverse=True)[0]
+        try:
+            with open(best['file'], "rb") as f:
+                return pickle.load(f)
+        except: return None
+
+    def rollback_source(self):
+        if not self.history: return False
+        best = sorted(self.history, key=lambda x: x['score'], reverse=True)[0]
+        try:
+            shutil.copy(best['src'], __file__)
+            print(f"[Rollback] Restored source code from generation {best['gen']}")
+            return True
+        except: return False
+
+class SelfImprover:
+    def attempt_improvement(self, current_score):
         """
-        Generates tasks based on the Tesseract Concept Vector.
-        The concept vector seeds the RNG for problem parameters.
+        Reads source code, attempts to optimize constants or logic.
+        """
+        try:
+            with open(__file__, "r") as f:
+                code = f.read()
+
+            tree = ast.parse(code)
+
+            class ConstantMutator(ast.NodeTransformer):
+                def visit_Constant(self, node):
+                    if isinstance(node.value, (int, float)) and not isinstance(node.value, bool):
+                        if random.random() < 0.01:
+                            if isinstance(node.value, int):
+                                return ast.Constant(value=node.value + random.randint(-1, 1))
+                            else:
+                                return ast.Constant(value=node.value * random.uniform(0.95, 1.05))
+                    return node
+
+            new_tree = ConstantMutator().visit(tree)
+            new_code = ast.unparse(new_tree)
+
+            if new_code != code:
+                with open(__file__, "w") as f:
+                    f.write(new_code)
+                print("[Self-Improvement] Mutated source code (Optimization attempt).")
+                return True
+            return False
+        except Exception as e:
+            print(f"[Self-Improvement] Failed: {e}")
+            return False
+
+class ProblemGenerator:
+    def generate(self, n=5, concept_vector: Optional[np.ndarray] = None, difficulty: int = 1) -> List[Task]:
+        """
+        Generates tasks based on the Tesseract Concept Vector and Difficulty Level.
         """
         tasks = []
 
-        # Use concept vector to bias generation if present
         bias_m = 1
         bias_c = 0
         if concept_vector is not None:
-            # Simple mapping from vector mean to integer params
             val = np.mean(concept_vector)
             bias_m = int(abs(val * 10)) % 5 + 1
             bias_c = int(abs(val * 100)) % 10
 
         for _ in range(n):
-            # 80% Sequence, 20% Transform
-            if np.random.rand() < 0.8:
+            if difficulty == 1:
+                # Level 1: Linear Sequence or Sort
+                if np.random.rand() < 0.8:
+                    m = bias_m
+                    c = bias_c
+                    if np.random.rand() < 0.5: m += np.random.randint(-1, 2)
+                    inp = [np.random.randint(0, 10) for _ in range(5)]
+                    out = [x * m + c for x in inp]
+                    tasks.append(Task(kind='sequence', input=inp, expected=out, hint=f"linear_{m}x+{c}"))
+                else:
+                    inp = [np.random.randint(0, 10) for _ in range(5)]
+                    out = sorted(inp)
+                    tasks.append(Task(kind='transform', input=inp, expected=out, hint="sort"))
+
+            elif difficulty == 2:
+                # Level 2: Quadratic or more complex linear
                 m = bias_m
                 c = bias_c
-                # Add some noise
-                if np.random.rand() < 0.5: m += np.random.randint(-1, 2)
+                inp = [np.random.randint(0, 10) for _ in range(5)]
+                # ax^2 + bx + c
+                a = np.random.randint(1, 3)
+                out = [a * x**2 + m * x + c for x in inp]
+                tasks.append(Task(kind='sequence', input=inp, expected=out, hint=f"quad_{a}x^2+{m}x+{c}"))
 
-                inp = [np.random.randint(0, 10) for _ in range(5)]
-                out = [x * m + c for x in inp]
-                tasks.append(Task(kind='sequence', input=inp, expected=out, hint=f"linear_{m}x+{c}"))
-            else:
-                inp = [np.random.randint(0, 10) for _ in range(5)]
-                out = sorted(inp)
-                tasks.append(Task(kind='transform', input=inp, expected=out, hint="sort"))
+            elif difficulty >= 3:
+                # Level 3: Modulo Arithmetic or larger inputs
+                m = max(2, bias_m)
+                mod = max(2, bias_c + 3)
+                inp = [np.random.randint(0, 20) for _ in range(5)]
+                out = [(x * m) % mod for x in inp]
+                tasks.append(Task(kind='sequence', input=inp, expected=out, hint=f"modulo_{m}x%{mod}"))
+
         return tasks
 
 class InventionMetaController:
@@ -252,65 +354,103 @@ class InventionMetaController:
         self.evaluator = InventionEvaluator()
         self.prob_gen = ProblemGenerator()
         self.metacognition = MetacognitiveController()
-
-        # Real Tesseract Engine
         self.tesseract = numpy_tesseract.TesseractEngine(z_dim=32)
-
         self.archive = []
+
+        # New RSI Components
+        self.checkpoint_manager = CheckpointManager()
+        self.self_improver = SelfImprover()
+        self.difficulty = 1
+        self.success_history = []
 
     def run(self, generations=10):
         print(f"Initializing Hybrid Neuro-Symbolic RSI Engine (Real Math)...")
-
-        # 1. Evolve Operators to find Novelty
         print("  > Evolving Tesseract Operators...")
         operators = self.tesseract.evolve_concepts(n_generations=5)
 
-        for gen in range(generations):
-            # 2. Pick a Concept (Operator)
+        gen = 0
+        while True:
+            # Infinite Loop
+
             current_op = operators[gen % len(operators)]
             concept_vec = self.tesseract.decode_concept(current_op)
 
-            # 3. Problem Phase: Materialize concept
-            tasks = self.prob_gen.generate(3, concept_vector=concept_vec)
+            # Generate with Current Difficulty
+            tasks = self.prob_gen.generate(3, concept_vector=concept_vec, difficulty=self.difficulty)
 
-            # 4. Metacognition: Assess
             complexity = self.metacognition.assess_complexity(tasks[0])
             routing = self.metacognition.route_reasoning(complexity)
 
-            print(f"\n[Gen {gen}] Complexity: {complexity:.2f} | Routing: {routing}")
+            print(f"\\n[Gen {gen}] Diff: {self.difficulty} | Complexity: {complexity:.2f} | Routing: {routing}")
 
-            # Apply Routing to Weights
-            # If Symbolic is high, favor simple mapping strategy (index 0)
-            # If Neural is high, flatter distribution (exploration)
             base_weights = {0: 1.0, 1: 1.0}
             if routing['symbolic'] > 0.6:
-                base_weights = {0: 5.0, 1: 1.0} # Favor map lambda
+                base_weights = {0: 5.0, 1: 1.0}
             elif routing['neural'] > 0.6:
-                base_weights = {0: 1.0, 1: 5.0} # Favor loop/accumulate (complex)
+                base_weights = {0: 1.0, 1: 5.0}
 
             self.repr.weights['strategy'] = base_weights
 
-            # 5. Wake Phase: Solve
             best_score = -1
 
             for _ in range(10):
                 raw, idx = self.searcher.generate_candidate()
                 refined = self.searcher.refine_candidate(raw, tasks)
                 score = self.evaluator.evaluate(refined, tasks)
-
                 if score > best_score:
                     best_score = score
 
             print(f"  > Solved: {best_score*100:.0f}%")
 
-            # 6. Feedback Loop (Reinforcement)
-            # Update the operator based on success
+            # Feedback
             reward = 1.0 if best_score == 1.0 else -1.0
             self.tesseract.feedback(current_op, reward)
             if reward > 0:
                 print("  > Feedback: Reinforced Operator (Success)")
             else:
                 print("  > Feedback: Penalized/Mutated Operator (Failure)")
+
+            # Auto-Curriculum & RSI Logic
+            self.success_history.append(best_score)
+            if len(self.success_history) > 20:
+                self.success_history.pop(0)
+
+            avg_success = sum(self.success_history) / len(self.success_history)
+
+            if avg_success > 0.9 and len(self.success_history) >= 10:
+                self.difficulty += 1
+                self.success_history = [] # Reset history on level up
+                print(f"  >>> [AUTO-CURRICULUM] Increasing Difficulty to {self.difficulty}")
+
+            elif avg_success < 0.2 and self.difficulty > 1 and len(self.success_history) >= 10:
+                self.difficulty -= 1
+                self.success_history = []
+                print(f"  >>> [AUTO-CURRICULUM] Decreasing Difficulty to {self.difficulty}")
+
+            # Checkpointing & Self-Improvement
+            if gen > 0 and gen % 10 == 0:
+                self.checkpoint_manager.save(self, gen, avg_success)
+
+                # Attempt Self-Rewrite
+                if self.self_improver.attempt_improvement(avg_success):
+                    print("  >>> [RSI] Source Code Mutated. Reloading Architecture...")
+                    # In a real system, we would restart. Here we just notify.
+                    pass
+
+            # Collapse Management
+            if len(self.success_history) >= 20 and avg_success == 0.0:
+                print("  !!! [COLLAPSE DETECTED] Initiating Rollback !!!")
+                if self.checkpoint_manager.rollback_source():
+                    state = self.checkpoint_manager.load_best()
+                    if state:
+                        self.repr.weights = state['weights']
+                        self.difficulty = state['difficulty']
+                        self.success_history = []
+                        print("  !!! [ROLLBACK] State Restored.")
+
+            gen += 1
+            if generations > 0 and gen >= generations:
+                 break
 
 def cmd_selftest():
     print("Running Self-Test...")
@@ -322,11 +462,9 @@ def cmd_resilience_test():
     print("[Resilience] Starting Infinite Loop Resilience Test...")
     controller = InventionMetaController()
 
-    # Inject POISON at index 0 (Symbolic favorite)
     def poison_strategy(_):
-        return "while True:\n    pass"
+        return "while True:\\n    pass"
 
-    # Inject VALID at index 1 (Neural favorite)
     def valid_strategy(_):
         return "return [__HOLE__(x) for x in task.input]"
 
@@ -335,11 +473,10 @@ def cmd_resilience_test():
     print("[Resilience] Injected Poison (idx 0) and Valid (idx 1).")
 
     start = time.time()
-    # Run for 5 generations
     controller.run(generations=5)
     duration = time.time() - start
 
-    print(f"\n[Resilience] Duration: {duration:.2f}s")
+    print(f"\\n[Resilience] Duration: {duration:.2f}s")
     print("[PASS] System survived infinite loops (even if not solved in short run).")
 
 def main():
@@ -353,7 +490,7 @@ def main():
     if args.cmd == 'selftest':
         cmd_selftest()
     elif args.cmd == 'evolve':
-        InventionMetaController().run(generations=10)
+        InventionMetaController().run(generations=0)
     elif args.cmd == 'resilience-test':
         cmd_resilience_test()
     else:
