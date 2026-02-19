@@ -5244,3 +5244,2398 @@ Initializing Hybrid Neuro-Symbolic RSI Engine (Real Math)...
   > Feedback: Reinforced Operator (Success)
 
 [Gen 940] Diff: 93 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 937
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.03 -> 0.02  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.8 -> 0.85  (perf=1.000)
+  [Checkpoint] Saved gen 940 | RSI params: {'num_candidates': 21, 'task_timeout': 0.15, 'feedback_lr': 0.02, 'curriculum_threshold': 0.85}
+
+[Gen 941] Diff: 93 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 938
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 942] Diff: 93 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 939
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 94
+
+[Gen 943] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 940
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 944] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 941
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 945] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 942
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.8 -> 0.85  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.85 -> 0.9  (perf=1.000)
+
+[Gen 946] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 943
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 947] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 944
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 948] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 945
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 949] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 946
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 950] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 947
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.85 -> 0.9  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.9 -> 0.95  (perf=1.000)
+  [Checkpoint] Saved gen 950 | RSI params: {'num_candidates': 21, 'task_timeout': 0.15, 'feedback_lr': 0.02, 'curriculum_threshold': 0.95}
+
+[Gen 951] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 948
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 952] Diff: 94 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 949
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 95
+
+[Gen 953] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 950
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 954] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 951
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 955] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 952
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.9 -> 0.95  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.02 -> 0.03  (perf=1.000)
+
+[Gen 956] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 953
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 957] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 954
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 958] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 955
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 959] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 956
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 960] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 957
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.02 -> 0.03  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.03 -> 0.04  (perf=1.000)
+  [Checkpoint] Saved gen 960 | RSI params: {'num_candidates': 21, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 961] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 958
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 962] Diff: 95 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 959
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 96
+
+[Gen 963] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 960
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 964] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 961
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 965] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 962
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.03 -> 0.04  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.15 -> 0.1  (perf=1.000)
+
+[Gen 966] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 963
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 967] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 964
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 968] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 965
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 969] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 966
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 970] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 967
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.15 -> 0.1  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.1 -> 0.15  (perf=1.000)
+  [Checkpoint] Saved gen 970 | RSI params: {'num_candidates': 21, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 971] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 968
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 972] Diff: 96 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 969
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 97
+
+[Gen 973] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 970
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 974] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 971
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 975] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 972
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.1 -> 0.15  (delta=+0.000)
+  [RSI-PROP] curriculum_threshold at boundary (0.95), skipping
+
+[Gen 976] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 973
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 977] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 974
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 978] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 975
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 979] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 976
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 980] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 977
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE num_candidates         21 -> 20  (perf=1.000)
+  [Checkpoint] Saved gen 980 | RSI params: {'num_candidates': 20, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 981] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 978
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 982] Diff: 97 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 979
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 98
+
+[Gen 983] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 980
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 984] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 981
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 985] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 982
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         21 -> 20  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.05  (perf=1.000)
+
+[Gen 986] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 983
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 987] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 984
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 988] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 985
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 989] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 986
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 990] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 987
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.05  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.95 -> 0.9  (perf=1.000)
+  [Checkpoint] Saved gen 990 | RSI params: {'num_candidates': 20, 'task_timeout': 0.15, 'feedback_lr': 0.05, 'curriculum_threshold': 0.9}
+
+[Gen 991] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 988
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 992] Diff: 98 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 989
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 99
+
+[Gen 993] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 990
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 994] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 991
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 995] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 992
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.95 -> 0.9  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.9 -> 0.85  (perf=1.000)
+
+[Gen 996] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 993
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 997] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 994
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 998] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 995
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 999] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 996
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1000] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 997
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.9 -> 0.85  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.05 -> 0.04  (perf=1.000)
+  [Checkpoint] Saved gen 1000 | RSI params: {'num_candidates': 20, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.85}
+
+[Gen 1001] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 998
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1002] Diff: 99 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 999
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 100
+
+[Gen 1003] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1000
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1004] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1001
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1005] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1002
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.05 -> 0.04  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.85 -> 0.9  (perf=1.000)
+
+[Gen 1006] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1003
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1007] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1004
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1008] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1005
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1009] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1006
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1010] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1007
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.85 -> 0.9  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.9 -> 0.95  (perf=1.000)
+  [Checkpoint] Saved gen 1010 | RSI params: {'num_candidates': 20, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1011] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1008
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1012] Diff: 100 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1009
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 101
+
+[Gen 1013] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1010
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1014] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1011
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1015] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1012
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.9 -> 0.95  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.15 -> 0.2  (perf=1.000)
+
+[Gen 1016] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1013
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1017] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1014
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1018] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1015
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1019] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1016
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1020] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1017
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.15 -> 0.2  (delta=+0.000)
+  [RSI-PROP] curriculum_threshold at boundary (0.95), skipping
+  [Checkpoint] Saved gen 1020 | RSI params: {'num_candidates': 20, 'task_timeout': 0.2, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1021] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1018
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1022] Diff: 101 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1019
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 102
+
+[Gen 1023] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1020
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1024] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1021
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1025] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1022
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE num_candidates         20 -> 21  (perf=1.000)
+
+[Gen 1026] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1023
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1027] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1024
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1028] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1025
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1029] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1026
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1030] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1027
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         20 -> 21  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.2 -> 0.15  (perf=1.000)
+  [Checkpoint] Saved gen 1030 | RSI params: {'num_candidates': 21, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1031] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1028
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1032] Diff: 102 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1029
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 103
+
+[Gen 1033] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1030
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1034] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1031
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1035] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1032
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.2 -> 0.15  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.15 -> 0.2  (perf=1.000)
+
+[Gen 1036] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1033
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1037] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1034
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1038] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1035
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1039] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1036
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1040] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1037
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.15 -> 0.2  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.2 -> 0.25  (perf=1.000)
+  [Checkpoint] Saved gen 1040 | RSI params: {'num_candidates': 21, 'task_timeout': 0.25, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1041] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1038
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1042] Diff: 103 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1039
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 104
+
+[Gen 1043] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1040
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1044] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1041
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1045] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1042
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.2 -> 0.25  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         21 -> 20  (perf=1.000)
+
+[Gen 1046] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1043
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1047] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1044
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1048] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1045
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1049] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1046
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1050] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1047
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         21 -> 20  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.25 -> 0.2  (perf=1.000)
+  [Checkpoint] Saved gen 1050 | RSI params: {'num_candidates': 20, 'task_timeout': 0.2, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1051] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1048
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1052] Diff: 104 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1049
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 105
+
+[Gen 1053] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1050
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1054] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1051
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1055] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1052
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.25 -> 0.2  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.2 -> 0.15  (perf=1.000)
+
+[Gen 1056] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1053
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1057] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1054
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1058] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1055
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1059] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1056
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1060] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1057
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.2 -> 0.15  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         20 -> 21  (perf=1.000)
+  [Checkpoint] Saved gen 1060 | RSI params: {'num_candidates': 21, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1061] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1058
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1062] Diff: 105 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1059
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 106
+
+[Gen 1063] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1060
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1064] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1061
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1065] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1062
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         20 -> 21  (delta=+0.000)
+  [RSI-PROP] curriculum_threshold at boundary (0.95), skipping
+
+[Gen 1066] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1063
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1067] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1064
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1068] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1065
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1069] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1066
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1070] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1067
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE task_timeout           0.15 -> 0.1  (perf=1.000)
+  [Checkpoint] Saved gen 1070 | RSI params: {'num_candidates': 21, 'task_timeout': 0.1, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1071] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1068
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1072] Diff: 106 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1069
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 107
+
+[Gen 1073] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1070
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1074] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1071
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1075] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1072
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.15 -> 0.1  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.05  (perf=1.000)
+
+[Gen 1076] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1073
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1077] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1074
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1078] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1075
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1079] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1076
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1080] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1077
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.05  (delta=+0.000)
+  [RSI-PROP] task_timeout at boundary (0.1), skipping
+  [Checkpoint] Saved gen 1080 | RSI params: {'num_candidates': 21, 'task_timeout': 0.1, 'feedback_lr': 0.05, 'curriculum_threshold': 0.95}
+
+[Gen 1081] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1078
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1082] Diff: 107 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1079
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 108
+
+[Gen 1083] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1080
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1084] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1081
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1085] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1082
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE feedback_lr            0.05 -> 0.04  (perf=1.000)
+
+[Gen 1086] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1083
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1087] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1084
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1088] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1085
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1089] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1086
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1090] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1087
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.05 -> 0.04  (delta=+0.000)
+  [RSI-PROP] task_timeout at boundary (0.1), skipping
+  [Checkpoint] Saved gen 1090 | RSI params: {'num_candidates': 21, 'task_timeout': 0.1, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1091] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1088
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1092] Diff: 108 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1089
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 109
+
+[Gen 1093] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1090
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1094] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1091
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1095] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1092
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE num_candidates         21 -> 20  (perf=1.000)
+
+[Gen 1096] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1093
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1097] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1094
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1098] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1095
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1099] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1096
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1100] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1097
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         21 -> 20  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.03  (perf=1.000)
+  [Checkpoint] Saved gen 1100 | RSI params: {'num_candidates': 20, 'task_timeout': 0.1, 'feedback_lr': 0.03, 'curriculum_threshold': 0.95}
+
+[Gen 1101] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1098
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1102] Diff: 109 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1099
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 110
+
+[Gen 1103] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1100
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1104] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1101
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1105] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1102
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.03  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.95 -> 0.9  (perf=1.000)
+
+[Gen 1106] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1103
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1107] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1104
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1108] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1105
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1109] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1106
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1110] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1107
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.95 -> 0.9  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         20 -> 19  (perf=1.000)
+  [Checkpoint] Saved gen 1110 | RSI params: {'num_candidates': 19, 'task_timeout': 0.1, 'feedback_lr': 0.03, 'curriculum_threshold': 0.9}
+
+[Gen 1111] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1108
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1112] Diff: 110 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1109
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 111
+
+[Gen 1113] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1110
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1114] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1111
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1115] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1112
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         20 -> 19  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.03 -> 0.04  (perf=1.000)
+
+[Gen 1116] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1113
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1117] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1114
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1118] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1115
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1119] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1116
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1120] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1117
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.03 -> 0.04  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.9 -> 0.95  (perf=1.000)
+  [Checkpoint] Saved gen 1120 | RSI params: {'num_candidates': 19, 'task_timeout': 0.1, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1121] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1118
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1122] Diff: 111 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1119
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 112
+
+[Gen 1123] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1120
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1124] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1121
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1125] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1122
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.9 -> 0.95  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         19 -> 20  (perf=1.000)
+
+[Gen 1126] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1123
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1127] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1124
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1128] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1125
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1129] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1126
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1130] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1127
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         19 -> 20  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.05  (perf=1.000)
+  [Checkpoint] Saved gen 1130 | RSI params: {'num_candidates': 20, 'task_timeout': 0.1, 'feedback_lr': 0.05, 'curriculum_threshold': 0.95}
+
+[Gen 1131] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1128
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1132] Diff: 112 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1129
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 113
+
+[Gen 1133] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1130
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1134] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1131
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1135] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1132
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.05  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.05 -> 0.04  (perf=1.000)
+
+[Gen 1136] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1133
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1137] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1134
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1138] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1135
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1139] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1136
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1140] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1137
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.05 -> 0.04  (delta=+0.000)
+  [RSI-PROP] curriculum_threshold at boundary (0.95), skipping
+  [Checkpoint] Saved gen 1140 | RSI params: {'num_candidates': 20, 'task_timeout': 0.1, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1141] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1138
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1142] Diff: 113 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1139
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 114
+
+[Gen 1143] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1140
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1144] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1141
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1145] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1142
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.03  (perf=1.000)
+
+[Gen 1146] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1143
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1147] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1144
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1148] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1145
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1149] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1146
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1150] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1147
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.03  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.03 -> 0.04  (perf=1.000)
+  [Checkpoint] Saved gen 1150 | RSI params: {'num_candidates': 20, 'task_timeout': 0.1, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1151] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1148
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1152] Diff: 114 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1149
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 115
+
+[Gen 1153] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1150
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1154] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1151
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1155] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1152
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.03 -> 0.04  (delta=+0.000)
+  [RSI-PROP] curriculum_threshold at boundary (0.95), skipping
+
+[Gen 1156] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1153
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1157] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1154
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1158] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1155
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1159] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1156
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1160] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1157
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE task_timeout           0.1 -> 0.15  (perf=1.000)
+  [Checkpoint] Saved gen 1160 | RSI params: {'num_candidates': 20, 'task_timeout': 0.15, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1161] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1158
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1162] Diff: 115 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1159
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 116
+
+[Gen 1163] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1160
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1164] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1161
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1165] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1162
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.1 -> 0.15  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.95 -> 0.9  (perf=1.000)
+
+[Gen 1166] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1163
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1167] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1164
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1168] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1165
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1169] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1166
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1170] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1167
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.95 -> 0.9  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.15 -> 0.2  (perf=1.000)
+  [Checkpoint] Saved gen 1170 | RSI params: {'num_candidates': 20, 'task_timeout': 0.2, 'feedback_lr': 0.04, 'curriculum_threshold': 0.9}
+
+[Gen 1171] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1168
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1172] Diff: 116 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1169
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 117
+
+[Gen 1173] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1170
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1174] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1171
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1175] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1172
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.15 -> 0.2  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.05  (perf=1.000)
+
+[Gen 1176] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1173
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1177] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1174
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1178] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1175
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1179] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1176
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1180] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1177
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.05  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.05 -> 0.04  (perf=1.000)
+  [Checkpoint] Saved gen 1180 | RSI params: {'num_candidates': 20, 'task_timeout': 0.2, 'feedback_lr': 0.04, 'curriculum_threshold': 0.9}
+
+[Gen 1181] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1178
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1182] Diff: 117 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1179
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 118
+
+[Gen 1183] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1180
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1184] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1181
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1185] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1182
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.05 -> 0.04  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         20 -> 19  (perf=1.000)
+
+[Gen 1186] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1183
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1187] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1184
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1188] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1185
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1189] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1186
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1190] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1187
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         20 -> 19  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.2 -> 0.25  (perf=1.000)
+  [Checkpoint] Saved gen 1190 | RSI params: {'num_candidates': 19, 'task_timeout': 0.25, 'feedback_lr': 0.04, 'curriculum_threshold': 0.9}
+
+[Gen 1191] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1188
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1192] Diff: 118 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1189
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 119
+
+[Gen 1193] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1190
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1194] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1191
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1195] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1192
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.2 -> 0.25  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.25 -> 0.3  (perf=1.000)
+
+[Gen 1196] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1193
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1197] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1194
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1198] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1195
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1199] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1196
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1200] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1197
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.25 -> 0.3  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         19 -> 18  (perf=1.000)
+  [Checkpoint] Saved gen 1200 | RSI params: {'num_candidates': 18, 'task_timeout': 0.3, 'feedback_lr': 0.04, 'curriculum_threshold': 0.9}
+
+[Gen 1201] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1198
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1202] Diff: 119 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1199
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 120
+
+[Gen 1203] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1200
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1204] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1201
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1205] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1202
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         19 -> 18  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         18 -> 19  (perf=1.000)
+
+[Gen 1206] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1203
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1207] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1204
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1208] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1205
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1209] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1206
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1210] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1207
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         18 -> 19  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.9 -> 0.95  (perf=1.000)
+  [Checkpoint] Saved gen 1210 | RSI params: {'num_candidates': 19, 'task_timeout': 0.3, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1211] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1208
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1212] Diff: 120 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1209
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 121
+
+[Gen 1213] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1210
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1214] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1211
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1215] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1212
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.9 -> 0.95  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.3 -> 0.35  (perf=1.000)
+
+[Gen 1216] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1213
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1217] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1214
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1218] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1215
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1219] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1216
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1220] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1217
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.3 -> 0.35  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.35 -> 0.3  (perf=1.000)
+  [Checkpoint] Saved gen 1220 | RSI params: {'num_candidates': 19, 'task_timeout': 0.3, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1221] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1218
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1222] Diff: 121 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1219
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 122
+
+[Gen 1223] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1220
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1224] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1221
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1225] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1222
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.35 -> 0.3  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.3 -> 0.35  (perf=1.000)
+
+[Gen 1226] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1223
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1227] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1224
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1228] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1225
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1229] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1226
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1230] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1227
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.3 -> 0.35  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.35 -> 0.4  (perf=1.000)
+  [Checkpoint] Saved gen 1230 | RSI params: {'num_candidates': 19, 'task_timeout': 0.4, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1231] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1228
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1232] Diff: 122 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1229
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 123
+
+[Gen 1233] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1230
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1234] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1231
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1235] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1232
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.35 -> 0.4  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.05  (perf=1.000)
+
+[Gen 1236] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1233
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1237] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1234
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1238] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1235
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1239] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1236
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1240] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1237
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.05  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         19 -> 18  (perf=1.000)
+  [Checkpoint] Saved gen 1240 | RSI params: {'num_candidates': 18, 'task_timeout': 0.4, 'feedback_lr': 0.05, 'curriculum_threshold': 0.95}
+
+[Gen 1241] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1238
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1242] Diff: 123 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1239
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 124
+
+[Gen 1243] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1240
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1244] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1241
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1245] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1242
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         19 -> 18  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.05 -> 0.04  (perf=1.000)
+
+[Gen 1246] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1243
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1247] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1244
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1248] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1245
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1249] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1246
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1250] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 18)
+  > [ARCHIVE] Solution stored. Total archived: 1247
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.05 -> 0.04  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         18 -> 19  (perf=1.000)
+  [Checkpoint] Saved gen 1250 | RSI params: {'num_candidates': 19, 'task_timeout': 0.4, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1251] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1248
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1252] Diff: 124 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1249
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 125
+
+[Gen 1253] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1250
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1254] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1251
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1255] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 19)
+  > [ARCHIVE] Solution stored. Total archived: 1252
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         18 -> 19  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         19 -> 20  (perf=1.000)
+
+[Gen 1256] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1253
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1257] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1254
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1258] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1255
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1259] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1256
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1260] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 20)
+  > [ARCHIVE] Solution stored. Total archived: 1257
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         19 -> 20  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         20 -> 21  (perf=1.000)
+  [Checkpoint] Saved gen 1260 | RSI params: {'num_candidates': 21, 'task_timeout': 0.4, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1261] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1258
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1262] Diff: 125 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1259
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 126
+
+[Gen 1263] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1260
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1264] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1261
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1265] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1262
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         20 -> 21  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.95 -> 0.9  (perf=1.000)
+
+[Gen 1266] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1263
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1267] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1264
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1268] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1265
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1269] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1266
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1270] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1267
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.95 -> 0.9  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.9 -> 0.95  (perf=1.000)
+  [Checkpoint] Saved gen 1270 | RSI params: {'num_candidates': 21, 'task_timeout': 0.4, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1271] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1268
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1272] Diff: 126 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1269
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 127
+
+[Gen 1273] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1270
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1274] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1271
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1275] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1272
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.9 -> 0.95  (delta=+0.000)
+  [RSI-PROP] curriculum_threshold at boundary (0.95), skipping
+
+[Gen 1276] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1273
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1277] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1274
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1278] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1275
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1279] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1276
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1280] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1277
+  > Feedback: Reinforced Operator (Success)
+  [RSI-PROP] PROPOSE task_timeout           0.4 -> 0.45  (perf=1.000)
+  [Checkpoint] Saved gen 1280 | RSI params: {'num_candidates': 21, 'task_timeout': 0.45, 'feedback_lr': 0.04, 'curriculum_threshold': 0.95}
+
+[Gen 1281] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1278
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1282] Diff: 127 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1279
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 128
+
+[Gen 1283] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1280
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1284] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1281
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1285] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1282
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.4 -> 0.45  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.45 -> 0.5  (perf=1.000)
+
+[Gen 1286] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1283
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1287] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1284
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1288] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1285
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1289] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1286
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1290] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1287
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.45 -> 0.5  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.95 -> 0.9  (perf=1.000)
+  [Checkpoint] Saved gen 1290 | RSI params: {'num_candidates': 21, 'task_timeout': 0.5, 'feedback_lr': 0.04, 'curriculum_threshold': 0.9}
+
+[Gen 1291] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1288
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1292] Diff: 128 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1289
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 129
+
+[Gen 1293] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1290
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1294] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1291
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1295] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1292
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.95 -> 0.9  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.9 -> 0.85  (perf=1.000)
+
+[Gen 1296] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1293
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1297] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1294
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1298] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1295
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1299] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1296
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1300] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1297
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.9 -> 0.85  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.5 -> 0.45  (perf=1.000)
+  [Checkpoint] Saved gen 1300 | RSI params: {'num_candidates': 21, 'task_timeout': 0.45, 'feedback_lr': 0.04, 'curriculum_threshold': 0.85}
+
+[Gen 1301] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1298
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1302] Diff: 129 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1299
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 130
+
+[Gen 1303] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1300
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1304] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1301
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1305] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1302
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.5 -> 0.45  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         21 -> 22  (perf=1.000)
+
+[Gen 1306] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1303
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1307] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1304
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1308] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1305
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1309] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1306
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1310] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1307
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         21 -> 22  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.85 -> 0.8  (perf=1.000)
+  [Checkpoint] Saved gen 1310 | RSI params: {'num_candidates': 22, 'task_timeout': 0.45, 'feedback_lr': 0.04, 'curriculum_threshold': 0.8}
+
+[Gen 1311] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1308
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1312] Diff: 130 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1309
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 131
+
+[Gen 1313] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1310
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1314] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1311
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1315] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1312
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.85 -> 0.8  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.45 -> 0.4  (perf=1.000)
+
+[Gen 1316] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1313
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1317] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1314
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1318] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1315
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1319] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1316
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1320] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1317
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.45 -> 0.4  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.04 -> 0.03  (perf=1.000)
+  [Checkpoint] Saved gen 1320 | RSI params: {'num_candidates': 22, 'task_timeout': 0.4, 'feedback_lr': 0.03, 'curriculum_threshold': 0.8}
+
+[Gen 1321] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1318
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1322] Diff: 131 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1319
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 132
+
+[Gen 1323] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1320
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1324] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1321
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1325] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1322
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.04 -> 0.03  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.4 -> 0.35  (perf=1.000)
+
+[Gen 1326] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1323
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1327] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1324
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1328] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1325
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1329] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1326
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1330] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1327
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.4 -> 0.35  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.8 -> 0.85  (perf=1.000)
+  [Checkpoint] Saved gen 1330 | RSI params: {'num_candidates': 22, 'task_timeout': 0.35, 'feedback_lr': 0.03, 'curriculum_threshold': 0.85}
+
+[Gen 1331] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1328
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1332] Diff: 132 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1329
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 133
+
+[Gen 1333] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1330
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1334] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1331
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1335] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 22)
+  > [ARCHIVE] Solution stored. Total archived: 1332
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.8 -> 0.85  (delta=+0.000)
+  [RSI-PROP] PROPOSE num_candidates         22 -> 21  (perf=1.000)
+
+[Gen 1336] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1333
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1337] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1334
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1338] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1335
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1339] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1336
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1340] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1337
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     num_candidates         22 -> 21  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.85 -> 0.8  (perf=1.000)
+  [Checkpoint] Saved gen 1340 | RSI params: {'num_candidates': 21, 'task_timeout': 0.35, 'feedback_lr': 0.03, 'curriculum_threshold': 0.8}
+
+[Gen 1341] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1338
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1342] Diff: 133 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1339
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 134
+
+[Gen 1343] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1340
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1344] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1341
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1345] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1342
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.85 -> 0.8  (delta=+0.000)
+  [RSI-PROP] PROPOSE curriculum_threshold   0.8 -> 0.85  (perf=1.000)
+
+[Gen 1346] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1343
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1347] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1344
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1348] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1345
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1349] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1346
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1350] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1347
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     curriculum_threshold   0.8 -> 0.85  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.35 -> 0.3  (perf=1.000)
+  [Checkpoint] Saved gen 1350 | RSI params: {'num_candidates': 21, 'task_timeout': 0.3, 'feedback_lr': 0.03, 'curriculum_threshold': 0.85}
+
+[Gen 1351] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1348
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1352] Diff: 134 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1349
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 135
+
+[Gen 1353] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1350
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1354] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1351
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1355] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1352
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     task_timeout           0.35 -> 0.3  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.03 -> 0.02  (perf=1.000)
+
+[Gen 1356] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1353
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1357] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1354
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1358] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1355
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1359] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1356
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1360] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1357
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.03 -> 0.02  (delta=+0.000)
+  [RSI-PROP] PROPOSE feedback_lr            0.02 -> 0.01  (perf=1.000)
+  [Checkpoint] Saved gen 1360 | RSI params: {'num_candidates': 21, 'task_timeout': 0.3, 'feedback_lr': 0.01, 'curriculum_threshold': 0.85}
+
+[Gen 1361] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1358
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1362] Diff: 135 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1359
+  > Feedback: Reinforced Operator (Success)
+  >>> [AUTO-CURRICULUM] Increasing Difficulty to 136
+
+[Gen 1363] Diff: 136 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1360
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1364] Diff: 136 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1361
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1365] Diff: 136 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1362
+  > Feedback: Reinforced Operator (Success)
+  [RSI-EVAL] KEPT     feedback_lr            0.02 -> 0.01  (delta=+0.000)
+  [RSI-PROP] PROPOSE task_timeout           0.3 -> 0.35  (perf=1.000)
+
+[Gen 1366] Diff: 136 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1363
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1367] Diff: 136 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1364
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1368] Diff: 136 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
+  > Solved: 100%  (candidates: 21)
+  > [ARCHIVE] Solution stored. Total archived: 1365
+  > Feedback: Reinforced Operator (Success)
+
+[Gen 1369] Diff: 136 | Complexity: 0.35 | Routing: {'neural': 0.35, 'symbolic': 0.65}
