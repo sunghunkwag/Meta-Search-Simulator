@@ -10,12 +10,10 @@ class NumpyAutoencoder:
         self.latent_dim = latent_dim
         self.lr = learning_rate
 
-        # Initialize weights (Xavier/Glorot)
         self.W1 = np.random.randn(input_dim, hidden_dim) * np.sqrt(2.0 / (input_dim + hidden_dim))
         self.b1 = np.zeros((1, hidden_dim))
         self.W2 = np.random.randn(hidden_dim, latent_dim) * np.sqrt(2.0 / (hidden_dim + latent_dim))
         self.b2 = np.zeros((1, latent_dim))
-
         self.W3 = np.random.randn(latent_dim, hidden_dim) * np.sqrt(2.0 / (latent_dim + hidden_dim))
         self.b3 = np.zeros((1, hidden_dim))
         self.W4 = np.random.randn(hidden_dim, input_dim) * np.sqrt(2.0 / (hidden_dim + input_dim))
@@ -28,48 +26,34 @@ class NumpyAutoencoder:
         return (x > 0).astype(float)
 
     def forward(self, X):
-        # Encoder
         self.z1 = np.dot(X, self.W1) + self.b1
         self.a1 = self.relu(self.z1)
         self.z2 = np.dot(self.a1, self.W2) + self.b2
-        self.latent = self.z2  # Linear activation for latent space
-
-        # Decoder
+        self.latent = self.z2
         self.z3 = np.dot(self.latent, self.W3) + self.b3
         self.a3 = self.relu(self.z3)
         self.z4 = np.dot(self.a3, self.W4) + self.b4
-        self.reconstruction = self.z4  # Linear output
-
+        self.reconstruction = self.z4
         return self.reconstruction, self.latent
 
     def backward(self, X, X_hat):
         m = X.shape[0]
-
-        # Loss derivative (MSE): dL/dX_hat = 2 * (X_hat - X) / m
         grad_output = 2 * (X_hat - X) / m
-
-        # Decoder Backprop
         d_z4 = grad_output
         d_W4 = np.dot(self.a3.T, d_z4)
         d_b4 = np.sum(d_z4, axis=0, keepdims=True)
-
         d_a3 = np.dot(d_z4, self.W4.T)
         d_z3 = d_a3 * self.relu_deriv(self.z3)
         d_W3 = np.dot(self.latent.T, d_z3)
         d_b3 = np.sum(d_z3, axis=0, keepdims=True)
-
-        # Encoder Backprop
         d_latent = np.dot(d_z3, self.W3.T)
-        d_z2 = d_latent  # Linear activation
+        d_z2 = d_latent
         d_W2 = np.dot(self.a1.T, d_z2)
         d_b2 = np.sum(d_z2, axis=0, keepdims=True)
-
         d_a1 = np.dot(d_z2, self.W2.T)
         d_z1 = d_a1 * self.relu_deriv(self.z1)
         d_W1 = np.dot(X.T, d_z1)
         d_b1 = np.sum(d_z1, axis=0, keepdims=True)
-
-        # Update weights
         self.W1 -= self.lr * d_W1
         self.b1 -= self.lr * d_b1
         self.W2 -= self.lr * d_W2
@@ -78,9 +62,7 @@ class NumpyAutoencoder:
         self.b3 -= self.lr * d_b3
         self.W4 -= self.lr * d_W4
         self.b4 -= self.lr * d_b4
-
-        loss = np.mean((X - X_hat) ** 2)
-        return loss
+        return np.mean((X - X_hat) ** 2)
 
 class NumpyGMM:
     """
@@ -98,10 +80,8 @@ class NumpyGMM:
         self.means = X[indices]
         self.covariances = np.array([np.eye(n_features) for _ in range(self.n_components)])
         self.weights = np.ones(self.n_components) / self.n_components
-
         distances = np.linalg.norm(X[:, np.newaxis] - self.means, axis=2)
         labels = np.argmin(distances, axis=1)
-
         for k in range(self.n_components):
             cluster_points = X[labels == k]
             if len(cluster_points) > 1:
@@ -113,10 +93,8 @@ class NumpyGMM:
                 self.covariances[k] = np.eye(n_features)
 
     def score_samples(self, X):
-        """Calculate log-likelihood for samples."""
         n_samples, n_features = X.shape
         log_prob = np.zeros((n_samples, self.n_components))
-
         for k in range(self.n_components):
             diff = X - self.means[k]
             inv_cov = np.linalg.inv(self.covariances[k])
@@ -124,8 +102,6 @@ class NumpyGMM:
             det_cov = np.linalg.det(self.covariances[k])
             norm_const = -0.5 * (n_features * np.log(2 * np.pi) + np.log(det_cov + 1e-10))
             log_prob[:, k] = norm_const - 0.5 * mahalanobis + np.log(self.weights[k] + 1e-10)
-
-        # Log-sum-exp trick for numerical stability
         max_log_prob = np.max(log_prob, axis=1, keepdims=True)
         return max_log_prob.squeeze() + np.log(np.sum(np.exp(log_prob - max_log_prob), axis=1))
 
@@ -133,14 +109,12 @@ class NumpyOperator:
     """
     Evolvable transformation matrix in latent space.
     f(z) = tanh(Wz + b)
-
     Augmented with best_W / best_b for ES-style reinforcement (see feedback()).
     """
     def __init__(self, latent_dim):
         self.latent_dim = latent_dim
         self.W = np.random.randn(latent_dim, latent_dim) * 0.1
         self.b = np.zeros(latent_dim)
-        # [FIX-06] Reinforcement memory: track best known configuration
         self.best_W = self.W.copy()
         self.best_b = self.b.copy()
         self.best_reward = -np.inf
@@ -152,7 +126,6 @@ class NumpyOperator:
         child = NumpyOperator(self.latent_dim)
         child.W = self.W + np.random.randn(*self.W.shape) * sigma
         child.b = self.b + np.random.randn(*self.b.shape) * sigma
-        # Inherit best known state from parent
         child.best_W = self.best_W.copy()
         child.best_b = self.best_b.copy()
         child.best_reward = self.best_reward
@@ -162,14 +135,11 @@ class TesseractEngine:
     def __init__(self, z_dim=32, vocab_size=1000):
         self.z_dim = z_dim
         self.vocab_size = vocab_size
-
         np.random.seed(42)
         self.human_embeddings = np.random.randn(vocab_size, 64)
         self.human_embeddings /= np.linalg.norm(self.human_embeddings, axis=1, keepdims=True)
-
         self.ae = NumpyAutoencoder(input_dim=64, hidden_dim=48, latent_dim=z_dim)
         self.gmm = NumpyGMM(n_components=5)
-
         self.train_autoencoder()
         self.fit_density()
 
@@ -186,79 +156,54 @@ class TesseractEngine:
         self.gmm.fit(latent)
 
     def evolve_concepts(self, n_generations=10, population_size=20) -> list:
-        """Evolution of Operators to find Novelty (High NLL).
-
-        [FIX-05] elites is now initialized before the loop to prevent
-        NameError when n_generations=0.
+        """
+        Evolution of Operators to find Novelty (High NLL).
+        [FIX-05] elites initialized before loop to prevent NameError on n_generations=0.
         """
         population = [NumpyOperator(self.z_dim) for _ in range(population_size)]
-        elites = population[:5]  # [FIX-05] Safe default: first 5 random operators
-
+        elites = population[:5]  # [FIX-05] Safe default
         for gen in range(n_generations):
             scores = []
             for op in population:
                 z_seed = np.random.randn(10, self.z_dim)
                 z_new = op.forward(z_seed)
-
                 log_prob = self.gmm.score_samples(z_new)
                 novelty = -np.mean(log_prob)
                 norm_penalty = np.mean(z_new ** 2)
                 fitness = novelty - 0.1 * norm_penalty
                 scores.append((fitness, op))
-
             scores.sort(key=lambda x: x[0], reverse=True)
             elites = [op for _, op in scores[:5]]
-
             new_pop = list(elites)
             while len(new_pop) < population_size:
                 parent = np.random.choice(elites)
                 child = parent.mutate()
                 new_pop.append(child)
             population = new_pop
-
         return elites
 
     def decode_concept(self, operator, n_samples=1):
-        """
-        Generates a 'concept vector' using the operator.
-        """
         z_seed = np.random.randn(n_samples, self.z_dim)
-        z_concept = operator.forward(z_seed)
-        return z_concept
+        return operator.forward(z_seed)
 
-    def feedback(self, operator, reward):
+    def feedback(self, operator, reward, lr: float = 0.05):
         """
         ES-style reinforcement update for a NumpyOperator.
+        [FIX-06] Proper ES update replacing no-op implementation.
+        [FIX-11] lr is now a parameter, controlled by PerformanceSelfImprover.
 
-        [FIX-06] Previous implementation was a no-op on success and applied
-        random noise subtraction on failure — neither had any learning effect.
-
-        New behavior:
-          reward > 0 (success):
-            - Store current weights as best_W / best_b if this is the best reward seen.
-            - Apply mild consolidation toward best known state (EMA blend).
-          reward <= 0 (failure):
-            - Perturb weights with Gaussian noise to explore.
-            - Partially revert toward best known state to avoid drifting too far.
+        reward > 0: store best weights + mild EMA consolidation.
+        reward <= 0: Gaussian exploration + partial revert toward best.
         """
-        lr = 0.05
-
         if reward > 0:
-            # Update best known configuration if this reward is better
             if reward >= operator.best_reward:
                 operator.best_W = operator.W.copy()
                 operator.best_b = operator.b.copy()
                 operator.best_reward = reward
-
-            # Mild consolidation: blend current weights toward best (EMA)
             operator.W = operator.W * 0.98 + operator.best_W * 0.02
             operator.b = operator.b * 0.98 + operator.best_b * 0.02
-
         else:
-            # Explore: perturb current weights with Gaussian noise
             operator.W += np.random.randn(*operator.W.shape) * lr
             operator.b += np.random.randn(*operator.b.shape) * lr
-
-            # Partial revert toward best to prevent unbounded drift
             operator.W = operator.W * 0.7 + operator.best_W * 0.3
             operator.b = operator.b * 0.7 + operator.best_b * 0.3
