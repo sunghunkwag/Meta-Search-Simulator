@@ -695,7 +695,7 @@ def main():
     if args.cmd == 'selftest':
         cmd_selftest()
     elif args.cmd == 'evolve':
-        InventionMetaController().run(generations=500)
+        InventionMetaController().run(generations=0)
     elif args.cmd == 'resilience-test':
         cmd_resilience_test()
     else:
